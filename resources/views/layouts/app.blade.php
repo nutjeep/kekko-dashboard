@@ -35,7 +35,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-            <div id="content">
+            <main id="content">
 
                 <!-- Topbar -->
                 @include('components.topbar')
@@ -49,7 +49,7 @@
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
+            </main>
             <!-- End of Main Content -->
 
             <!-- Footer -->
