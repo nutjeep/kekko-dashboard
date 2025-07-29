@@ -13,6 +13,6 @@ class OrderRepository extends BaseRepository
 
    public function getOrder()
    {
-      return $this->model->get();
+      return $this->model->orderBy('created_at', 'desc')->get();
    }
 }

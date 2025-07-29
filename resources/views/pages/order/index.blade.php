@@ -35,47 +35,61 @@
                   </tr>
                </tfoot>
                <tbody>
-                  <tr>
-                     <td>1</td>
-                     <td>Humaidi Dahlah</td>
-                     <td>08123456789</td>
-                     <td style="display: flex; flex-direction: column; gap: 5px;">
-                        <span class="btn btn-sm btn-info">
-                           Undangan Cetak
-                        </span>
-                        <span class="btn btn-sm btn-warning">
-                           Undangan Digital
-                        </span>
-                     </td>
-                     <td>25 Jul 2025</td>
-                     <td style="display: flex; flex-direction: column; gap: 5px;">
-                        <span class="btn btn-sm btn-secondary">
-                           Pending
-                        </span>
-                        <span class="btn btn-sm btn-info">
-                           Pengerjaan
-                        </span>
-                        <span class="btn btn-sm btn-warning">
-                           Ready to Check
-                        </span>
-                        <span class="btn btn-sm btn-success">
-                           Selesai
-                        </span>
-                     </td>
-                     <td>
-                        <div style="display: flex; gap: 5px;">
-                           <a href="#" class="btn btn-sm btn-primary">
-                              <i class="fas fa-eye"></i>
-                           </a>
-                           <a href="{{ route('order.edit') }}" class="btn btn-sm btn-warning">
-                              <i class="fas fa-edit"></i>
-                           </a>
-                           <a href="#" class="btn btn-sm btn-danger">
-                              <i class="fas fa-trash"></i>
-                           </a>
-                        </div>
-                     </td>
-                  </tr>
+                  @foreach ($orders as $order)
+                     <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $order->customer_name }}</td>
+                        <td>{{ $order->customer_phone }}</td>
+                        <td style="display: flex; flex-direction: column; gap: 5px;">
+                           @if ($order->order_information['invitation_type'] == 'printed_invitation')
+                              <span class="btn btn-sm btn-info">
+                                 Undangan Cetak
+                              </span>
+                           @elseif ($order->order_information['invitation_type'] == 'digital_invitation')
+                              <span class="btn btn-sm btn-warning">
+                                 Undangan Digital
+                              </span>
+                           @elseif ($order->order_information['invitation_type'] == 'printed_digital')
+                              <span class="btn btn-sm btn-danger">
+                                 Digital & Cetak
+                              </span>
+                           @endif
+                        </td>
+                        <td>{{ $order->formatted_created_at }}</td>
+                        <td style="display: flex; flex-direction: column; gap: 5px;">
+                           @if ($order->status == 'pending')
+                              <span class="btn btn-sm btn-secondary">
+                                 Pending
+                              </span>
+                           @elseif($order->status == 'on progress')
+                              <span class="btn btn-sm btn-info">
+                                 On Progress
+                              </span>
+                           @elseif($order->status == 'ready to check')
+                              <span class="btn btn-sm btn-warning">
+                                 Ready to Check
+                              </span>
+                           @elseif($order->status == 'done')
+                              <span class="btn btn-sm btn-success">
+                                 Completed
+                              </span>
+                           @endif
+                        </td>
+                        <td>
+                           <div style="display: flex; gap: 5px;">
+                              <a href="#" class="btn btn-sm btn-primary">
+                                 <i class="fas fa-eye"></i>
+                              </a>
+                              <a href="{{ route('order.edit') }}" class="btn btn-sm btn-warning">
+                                 <i class="fas fa-edit"></i>
+                              </a>
+                              <a href="#" class="btn btn-sm btn-danger">
+                                 <i class="fas fa-trash"></i>
+                              </a>
+                           </div>
+                        </td>
+                     </tr>
+                  @endforeach
                </tbody>
             </table>
          </div>
