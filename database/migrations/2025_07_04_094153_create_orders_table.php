@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('customer_name', 200);
+            $table->string('customer_phone', 16);
+            $table->json('order_information')->nullable();
+            $table->json('bride_groom_data')->nullable();
+            $table->json('agenda_data')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
