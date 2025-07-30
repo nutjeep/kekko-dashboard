@@ -8,7 +8,8 @@ use App\Http\Controllers\ProductController;
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 
 Route::get('order', [OrderController::class, 'index'])->name('order');
-Route::get('order/edit', [OrderController::class, 'edit'])->name('order.edit');
+Route::get('order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
+Route::post('order/update/{id}', [OrderController::class, 'update'])->name('order.update');
 
 Route::get('data-pesanan', [OrderController::class, 'orderData'])->name('order_data');
 Route::post('data-pesanan/send', [OrderController::class, 'sendOrderData'])->name('send.order_data');

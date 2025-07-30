@@ -73,18 +73,19 @@
                               <span class="btn btn-sm btn-success">
                                  Completed
                               </span>
+                           @elseif($order->status == 'done')
+                              <span class="btn btn-sm btn-danger">
+                                 Canceled
+                              </span>
                            @endif
                         </td>
                         <td>
                            <div style="display: flex; gap: 5px;">
-                              <a href="#" class="btn btn-sm btn-primary">
+                              {{-- <a href="#" class="btn btn-sm btn-primary">
                                  <i class="fas fa-eye"></i>
-                              </a>
-                              <a href="{{ route('order.edit') }}" class="btn btn-sm btn-warning">
+                              </a> --}}
+                              <a href="{{ route('order.edit', $order->id) }}" class="btn btn-sm btn-warning">
                                  <i class="fas fa-edit"></i>
-                              </a>
-                              <a href="#" class="btn btn-sm btn-danger">
-                                 <i class="fas fa-trash"></i>
                               </a>
                            </div>
                         </td>

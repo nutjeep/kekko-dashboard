@@ -15,4 +15,9 @@ class OrderRepository extends BaseRepository
    {
       return $this->model->orderBy('created_at', 'desc')->get();
    }
+
+   public function getStatuses()
+   {
+      return Order::STATUSES;
+   }
 }

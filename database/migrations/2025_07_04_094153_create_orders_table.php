@@ -18,7 +18,7 @@ return new class extends Migration
          $table->json('order_information')->nullable();
          $table->json('groom_bride_data')->nullable();
          $table->json('agenda_data')->nullable();
-         $table->string('status', 50)->default('pending')->nullable()->comment('pending, on progress, ready to check, done');
+         $table->string('status', 50)->default('pending')->nullable()->comment('pending | on progress | ready to check | done | canceled');
          $table->integer('user_id')->nullable();
          $table->timestamps();
          $table->softDeletes();

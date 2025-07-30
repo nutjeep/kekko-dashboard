@@ -20,6 +20,14 @@ class Order extends Model
       'agenda_data' => 'array'
    ];
 
+   const STATUSES = [
+      'pending' => 'Pending',
+      'on progress' => 'On Progress',
+      'ready to check' => 'Ready to Check',
+      'done' => 'Done',
+      'canceled' => 'Canceled',
+   ];
+
    public function getFormattedCreatedAtAttribute()
    {
       return Carbon::parse($this->created_at)->translatedFormat('d F Y');
