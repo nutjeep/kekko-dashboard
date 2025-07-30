@@ -94,13 +94,13 @@
                <div class="form-check">
                   <input class="form-check-input" type="radio" name="first_come" id="first_come_groom" value="groom" @if($order->order_information['first_come'] == 'groom') checked @endif>
                   <label class="form-check-label" for="first_come_groom">
-                     Laki - Laki
+                     Pria
                   </label>
                </div>
                <div class="form-check">
                   <input class="form-check-input" type="radio" name="first_come" id="first_come_bride" value="bride" @if($order->order_information['first_come'] == 'bride') checked @endif>
                   <label class="form-check-label" for="first_come_bride">
-                     Perempuan
+                     Wanita
                   </label>
                </div>
             </div>
@@ -126,7 +126,7 @@
                </div>
             </div>
             <div class="col-lg-4">
-               <div class="mb-3" id="digital_invitation">
+               <div class="mb-3" id="digital_invitation_section">
                   <h3 class="h5">Undangan Digital</h3>
                   <div class="form-group mb-3">
                      <label for="digital_theme">Tema Undangan</label>
@@ -146,8 +146,8 @@
                      </select>
                   </div>
                </div>
-               <hr>
-               <div class="mb-3" id="printed_invitation">
+               
+               <div class="mb-3" id="printed_invitation_section">
                   <h3 class="h5">Undangan Cetak</h3>
                   <div class="form-group mb-3">
                      <label for="printed_type">Tipe Undangan</label>
@@ -234,7 +234,7 @@
                      <div class="input-group-prepend">
                         <span class="input-group-text">@</span>
                      </div>
-                     <input type="text" name="groom_instagram" value="{{ old('groom_instagram', $order->groom_bride_data['groom']['instagram']) }}" id="groom_instagram" class="form-control" aria-label="Groom Instagram">
+                     <input type="text" name="groom_instagram" value="{{ old('groom_instagram', $order->groom_bride_data['groom']['instagram']) }}" id="groom_instagram" class="form-control c" aria-label="Groom Instagram" oninput="this.value = this.value.replace(/\s+/g, '').toLowerCase();">
                      <div class="input-group-append">
                         <button class="input-group-text" id="groom_instagram">copy</button>
                      </div>
@@ -310,7 +310,7 @@
                      <div class="input-group-prepend">
                         <span class="input-group-text">@</span>
                      </div>
-                     <input type="text" name="bride_instagram" value="{{ old('bride_instagram', $order->groom_bride_data['bride']['instagram']) }}" id="bride_instagram" class="form-control" aria-label="Amount (to the nearest dollar)">
+                     <input type="text" name="bride_instagram" value="{{ old('bride_instagram', $order->groom_bride_data['bride']['instagram']) }}" id="bride_instagram" class="form-control" aria-label="Amount (to the nearest dollar)" oninput="this.value = this.value.replace(/\s+/g, '').toLowerCase();">
                      <div class="input-group-append">
                         <button class="input-group-text" id="bride_instagram">copy</button>
                      </div>
@@ -432,3 +432,69 @@
       </div>
    </form>
 @endsection
+
+@push('script')
+   <script>
+      function updateInvitationDisplay() {
+         const selectedValue = $('input[name="invitation_type"]:checked').val();
+      
+         $('#digital_invitation_section, #printed_invitation_section').hide();
+         
+         if (selectedValue === 'digital_invitation') {
+            $('#digital_invitation_section').fadeIn(200);
+         }
+         else if (selectedValue === 'printed_invitation') {
+            $('#printed_invitation_section').fadeIn(200);
+         }
+         else if (selectedValue === 'printed_digital') {
+            $('#digital_invitation_section, #printed_invitation_section').fadeIn(200);
+         }
+      }
+
+      // Fungsi untuk copy ke clipboard dengan animasi
+      function copyToClipboard(elementId) {
+         // Dapatkan elemen input/textarea berdasarkan ID
+         const inputElement = document.getElementById(elementId);
+         
+         // Copy value ke clipboard
+         navigator.clipboard.writeText(inputElement.value)
+            .then(() => {
+                  // Dapatkan tombol copy
+                  const copyButton = $(`button[id="${elementId}"]`);
+                  
+                  // Simpan teks asli
+                  const originalText = copyButton.text();
+                  const originalClass = copyButton.attr('class');
+                  
+                  // Ubah tampilan tombol
+                  copyButton.text('Text copied!')
+                     .removeClass(originalClass)
+                     .addClass('input-group-text bg-dark text-white')
+                     .css('transition', 'all 0.3s ease');
+                  
+                  // Kembalikan ke state semula setelah 3 detik
+                  setTimeout(() => {
+                     copyButton.text(originalText)
+                        .removeClass('bg-dark text-white')
+                        .addClass(originalClass);
+                  }, 2000);
+            })
+            .catch(err => {
+                  console.error('Gagal menyalin teks: ', err);
+            });
+      }
+
+      $(document).ready(function() {
+         // === UPDATE DISPLAY INVITATION
+         $('input[name="invitation_type"]').change(updateInvitationDisplay);
+         updateInvitationDisplay();
+
+         // === FUNGSI COPY TO CLIPBOARD
+         $('button[id]').on('click', function(e) {
+            e.preventDefault();
+            const elementId = $(this).attr('id');
+            copyToClipboard(elementId);
+         });
+      });
+   </script>
+@endpush
