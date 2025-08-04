@@ -2,16 +2,34 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\RoleUser;
 use Illuminate\Database\Seeder;
 
 class RoleUserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        //
-    }
+   protected array $roles = [
+      [
+         'name' => 'superadmin',
+      ],
+      [
+         'name' => 'employee',
+      ],
+   ];
+
+   public function run(): void
+   {
+      $rolesSeed = $this->roles;
+      foreach ($rolesSeed as $role) {
+         $role_exists = RoleUser::where('name', $role['name'])->first();
+         if ($role_exists) {
+            continue;
+         }
+
+         RoleUser::create([
+            'name' => $role['name'],
+            'created_at' => now(),
+            'updated_at' => now(),
+         ]);
+      }
+   }
 }
