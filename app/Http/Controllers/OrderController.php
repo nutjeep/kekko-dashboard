@@ -33,7 +33,8 @@ class OrderController extends Controller
    {
       $statuses = $this->orderRepository->getStatuses();
       $order = $this->orderRepository->find($id);
-      return view('pages.order.edit', compact('order', 'statuses'));
+      $employees = $this->orderRepository->getEmployees();
+      return view('pages.order.edit', compact('order', 'statuses', 'employees'));
    }
 
    public function update(Request $request, $id)

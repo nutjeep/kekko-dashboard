@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Models\Order;
 
 class OrderRepository extends BaseRepository 
@@ -19,5 +20,10 @@ class OrderRepository extends BaseRepository
    public function getStatuses()
    {
       return Order::STATUSES;
+   }
+
+   public function getEmployees()
+   {
+      return User::where('role_id', 2)->get();
    }
 }

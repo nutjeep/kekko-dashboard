@@ -56,8 +56,16 @@
             <div class="col-lg-3">
                <div class="form-group">
                   <label for="user_id">Employee</label>
-                  <select name="user_id" id="user_id" class="form-control" disabled>
-                     <option value="">Fulan bin Fulan</option>
+                  <select name="user_id" id="user_id" class="form-control">
+                     @foreach ($employees as $employee)
+                        @if ($employee->id == $order->user_id)
+                           <option value="{{ $employee->id }}" selected>{{ $employee->name }}</option>
+                        @else
+                           <option value="" selected disabled>Pilih Pegawai</option>
+                           <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                           <option value="">None</option>
+                        @endif
+                     @endforeach
                   </select>
                </div>
             </div>
@@ -344,9 +352,19 @@
                   <label for="akad_date">Tanggal</label>
                   <input type="date" id="akad_date" class="form-control" name="akad_date" value="{{ old('akad_date', $order->agenda_data['akad']['date']) }}">
                </div>
-               <div class="form-group mb-3">
-                  <label for="akad_time">Waktu</label>
-                  <input type="time" id="akad_time" class="form-control" name="akad_time" value="{{ old('akad_time', $order->agenda_data['akad']['time']) }}">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="akad_time_start">Waktu Mulai</label>
+                        <input type="time" id="akad_time_start" class="form-control" name="akad_time_start" value="{{ old('akad_time_start', $order->agenda_data['akad']['time_start']) }}">
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="akad_time_end">Waktu Selesai</label>
+                        <input type="time" id="akad_time_end" class="form-control" name="akad_time_end" value="{{ old('akad_time_end', $order->agenda_data['akad']['time_end']) }}">
+                     </div>
+                  </div>
                </div>
                <div class="form-group mb-3">
                   <label for="akad_place">Tempat</label>
@@ -367,15 +385,26 @@
                   </div>
                </div>
             </div>
+
             <div class="col-lg-4">
                <h3 class="h5">Resepsi Pernikahan</h3>
                <div class="form-group mb-3">
                   <label for="resepsi_date">Tanggal</label>
                   <input type="date" id="resepsi_date" class="form-control" name="resepsi_date" value="{{ old('resepsi_date', $order->agenda_data['resepsi']['date']) }}">
                </div>
-               <div class="form-group mb-3">
-                  <label for="resepsi_time">Waktu</label>
-                  <input type="time" id="resepsi_time" class="form-control" name="resepsi_time" value="{{ old('resepsi_time', $order->agenda_data['resepsi']['time']) }}">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="resepsi_time_start">Waktu Mulai</label>
+                        <input type="time" id="resepsi_time_start" class="form-control" name="resepsi_time_start" value="{{ old('resepsi_time_start', $order->agenda_data['resepsi']['time_start']) }}">
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="resepsi_time_end">Waktu Selesai</label>
+                        <input type="time" id="resepsi_time_end" class="form-control" name="resepsi_time_end" value="{{ old('resepsi_time_end', $order->agenda_data['resepsi']['time_end']) }}">
+                     </div>
+                  </div>
                </div>
                <div class="form-group mb-3">
                   <label for="resepsi_place">Tempat</label>
@@ -396,15 +425,26 @@
                   </div>
                </div>
             </div>
+            
             <div class="col-lg-4">
                <h3 class="h5">Ngunduh Mantu</h3>
                <div class="form-group mb-3">
                   <label for="ngunduh_mantu_date">Tanggal</label>
                   <input type="date" id="ngunduh_mantu_date" class="form-control" name="ngunduh_mantu_date" value="{{ old('ngunduh_mantu_date', $order->agenda_data['ngunduh_mantu']['date']) }}">
                </div>
-               <div class="form-group mb-3">
-                  <label for="ngunduh_mantu_time">Waktu</label>
-                  <input type="time" id="ngunduh_mantu_time" class="form-control" name="ngunduh_mantu_time" value="{{ old('ngunduh_mantu_time', $order->agenda_data['ngunduh_mantu']['time']) }}">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="ngunduh_mantu_time_start">Waktu Mulai</label>
+                        <input type="time" id="ngunduh_mantu_time_start" class="form-control" name="ngunduh_mantu_time_start" value="{{ old('ngunduh_mantu_time_start', $order->agenda_data['ngunduh_mantu']['time_start']) }}">
+                     </div>
+                  </div>
+                  <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="ngunduh_mantu_time_end">Waktu Selesai</label>
+                        <input type="time" id="ngunduh_mantu_time_end" class="form-control" name="ngunduh_mantu_time_end" value="{{ old('ngunduh_mantu_time_end', $order->agenda_data['ngunduh_mantu']['time_end']) }}">
+                     </div>
+                  </div>
                </div>
                <div class="form-group mb-3">
                   <label for="ngunduh_mantu_place">Tempat</label>

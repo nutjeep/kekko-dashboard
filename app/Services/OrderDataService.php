@@ -14,6 +14,7 @@ class OrderDataService
       
       return [
          'customer_name' => $request->customer_name,
+         'user_id' => $request->user_id,
          'customer_phone' => $request->customer_phone,
          'status' => $request->status ?? 'pending',
          'order_information' => self::prepareOrderInformation($request),
@@ -78,7 +79,8 @@ class OrderDataService
    {
       return [
          'date' => $request->{$prefix.'_date'},
-         'time' => $request->{$prefix.'_time'},
+         'time_start' => $request->{$prefix.'_time_start'},
+         'time_end' => $request->{$prefix.'_time_end'} ?? 'Selesai',
          'place' => $request->{$prefix.'_place'},
          'maps' => $request->{$prefix.'_maps'},
       ];

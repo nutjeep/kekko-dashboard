@@ -336,15 +336,26 @@
                   <h2>Akad Nikah</h2>
                   <div class="form-group mb-3">
                      <label for="akad_date">Tanggal</label>
-                     <input type="date" id="akad_date" class="form-control" name="akad_date" required>
+                     <input type="date" id="akad_date" class="form-control" name="akad_date">
                   </div>
-                  <div class="form-group mb-3">
-                     <label for="akad_time">Waktu</label>
-                     <input type="time" id="akad_time" class="form-control" name="akad_time" required>
+                  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="akad_time_start">Waktu Mulai</label>
+                           <input type="time" id="akad_time_start" class="form-control" name="akad_time_start">
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="akad_time_end">Waktu Selesai</label>
+                           <input type="time" id="akad_time_end" class="form-control" name="akad_time_end">
+                           <small><strong>* Kosongkan apabila tidak ada waktu selesai</strong></small>
+                        </div>
+                     </div>
                   </div>
                   <div class="form-group mb-3">
                      <label for="akad_place">Tempat</label>
-                     <input type="text" id="akad_place" class="form-control" name="akad_place" placeholder="Cth: Kediaman Mempelai Wanita" required>
+                     <input type="text" id="akad_place" class="form-control" name="akad_place" placeholder="Cth: Kediaman Mempelai Wanita">
                   </div>
                   <div class="form-group mb-3">
                      <label for="">Link Google Map</label>
@@ -358,15 +369,26 @@
                   <h2>Resepsi Pernikahan</h2>
                   <div class="form-group mb-3">
                      <label for="resepsi_date">Tanggal</label>
-                     <input type="date" id="resepsi_date" class="form-control" name="resepsi_date" required>
+                     <input type="date" id="resepsi_date" class="form-control" name="resepsi_date">
                   </div>
-                  <div class="form-group mb-3">
-                     <label for="resepsi_time">Waktu</label>
-                     <input type="time" id="resepsi_time" class="form-control" name="resepsi_time" required>
+                  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="resepsi_time_start">Waktu Mulai</label>
+                           <input type="time" id="resepsi_time_start" class="form-control" name="resepsi_time_start">
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="resepsi_time_end">Waktu Selesai</label>
+                           <input type="time" id="resepsi_time_end" class="form-control" name="resepsi_time_end">
+                           <small><strong>* Kosongkan apabila tidak ada waktu selesai</strong></small>
+                        </div>
+                     </div>
                   </div>
                   <div class="form-group mb-3">
                      <label for="resepsi_place">Tempat</label>
-                     <input type="text" id="resepsi_place" class="form-control" name="resepsi_place" placeholder="Cth: Kediaman Mempelai Pria" required>
+                     <input type="text" id="resepsi_place" class="form-control" name="resepsi_place" placeholder="Cth: Kediaman Mempelai Pria">
                   </div>
                   <div class="form-group mb-3">
                      <label for="resepsi_maps">Link Google Map</label>
@@ -382,9 +404,20 @@
                      <label for="ngunduh_mantu_date">Tanggal</label>
                      <input type="date" id="ngunduh_mantu_date" class="form-control" name="ngunduh_mantu_date">
                   </div>
-                  <div class="form-group mb-3">
-                     <label for="ngunduh_mantu_time">Waktu</label>
-                     <input type="time" id="ngunduh_mantu_time" class="form-control" name="ngunduh_mantu_time">
+                  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="ngunduh_mantu_time_start">Waktu Mulai</label>
+                           <input type="time" id="ngunduh_mantu_time_start" class="form-control" name="ngunduh_mantu_time_start">
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                           <label for="ngunduh_mantu_time_end">Waktu Selesai</label>
+                           <input type="time" id="ngunduh_mantu_time_end" class="form-control" name="ngunduh_mantu_time_end">
+                           <small><strong>* Kosongkan apabila tidak ada waktu selesai</strong></small>
+                        </div>
+                     </div>
                   </div>
                   <div class="form-group mb-3">
                      <label for="ngunduh_mantu_place">Tempat</label>
