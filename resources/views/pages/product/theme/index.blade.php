@@ -5,6 +5,36 @@
 @endpush
 
 @section('content')
+   @if (session()->has('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+         <strong>{{ session('success') }}</strong>
+         <button type="button" class="close btn-close-alert" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+   @endif
+   @if ($errors->any())
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+         <ul class="mb-0">
+               @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+               @endforeach
+         </ul>
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+   @endif
+
+   @if (session()->has('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+         <strong>{{ session('success') }}</strong>
+         <button type="button" class="close btn-close-alert" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+       
+   @endif
    <div class="card shadow mb-4">
       <div class="card-header py-3 d-flex justify-content-between">
          <h6 class="m-0 font-weight-bold text-primary">Produk - Tema</h6>
@@ -37,10 +67,10 @@
                      <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $theme->name }}</td>
-                        <td>{{ $theme->created_at }}</td>
+                        <td>{{ $theme->formatted_created_at }}</td>
                         <td>
                            <div style="display: flex; gap: 5px;">
-                              <button data-id="{{ $theme->id }}" class="btn btn-sm btn-warning">
+                              <button type="button" id="btn-edit-theme" data-id="{{ $theme->id }}" class="btn btn-sm btn-warning">
                                  <i class="fas fa-edit"></i>
                               </button>
                            </div>
@@ -55,7 +85,7 @@
 @endsection
 
 {{-- MODAL CREATE --}}
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="createThemeModal" tabindex="-1" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
          <div class="modal-header">
@@ -64,7 +94,7 @@
                <span>&times;</span>
             </button>
          </div>
-         <form action="" method="post">
+         <form action="{{ route('product_theme.store') }}" method="post">
             @csrf
             <div class="modal-body">
                <div class="form-group">
@@ -73,8 +103,8 @@
                </div>
             </div>
             <div class="modal-footer">
-               <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>
-               <button class="btn btn-primary" data-dismiss="modal">
+               <button class="btn btn-danger" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">
                   <i class="fas fa-save mr-1"></i>
                   Simpan
                </button>
@@ -85,7 +115,7 @@
 </div>
 
 {{-- MODAL UPDATE --}}
-<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="editThemeModal" data-id="" tabindex="-1" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
          <div class="modal-header">
@@ -94,17 +124,17 @@
                <span>&times;</span>
             </button>
          </div>
-         <form action="" method="post">
+         <form method="post">
             @csrf
             <div class="modal-body">
                <div class="form-group">
                   <label for="name">Nama Tema</label>
-                  <input type="text" class="form-control" name="name" id="name" value="" required>
+                  <input type="text" class="form-control" name="name" id="modal_name" value="" required>
                </div>
             </div>
             <div class="modal-footer">
-               <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>
-               <button class="btn btn-primary" data-dismiss="modal">
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">
                   <i class="fas fa-save mr-1"></i>
                   Simpan
                </button>
@@ -125,7 +155,56 @@
    <script>
       $(document).ready(function() {
          $('#btn-create').on('click', function() {
-            $('#createModal').modal('show');
+            $('#createThemeModal').modal('show');
+         });
+
+         // === EDIT THEME ===
+         $(document).on('click', '#btn-edit-theme', function() {
+            let theme_id = $(this).data('id');
+            let url = "{{ route('product_theme.edit', [':theme_id']) }}";
+               url = url.replace(':theme_id', theme_id);
+
+            $.ajax({
+               url: url,
+               headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               type: 'GET',
+               success: function(response) {
+                  $('#editThemeModal').find('#modal_name').val(response.name);
+                  $('#editThemeModal').data('id', response.id);
+                  $('#editThemeModal').modal('show');
+               },
+               error: function(error) {
+                  alert('Gagal mengambil data order.');
+                  console.error('error : ', error);
+               }
+            });
+         });
+      });
+
+      // === UPDATE THEME ===
+      $(document).on('submit', '#editThemeModal form', function(e) {
+         e.preventDefault();
+         let url = "{{ route('product_theme.update', [':theme_id']) }}";
+         url = url.replace(':theme_id', $('#editThemeModal').data('id'));
+
+         $.ajax({
+            url: url, 
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+               $('#editThemeModal').modal('hide');
+               $('#editThemeModal').find('#modal_name').val('');
+               $('#editThemeModal').find('#modal_name').focus();
+               
+               // Refresh table
+               location.reload();
+            },
+            error: function(error) {
+               alert('Gagal mengambil data order.');
+               console.error('error : ', error);
+            }
          });
       });
    </script>

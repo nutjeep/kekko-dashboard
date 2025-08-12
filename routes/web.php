@@ -17,7 +17,9 @@ Route::get('transaction', [TransactionController::class, 'index'])->name('transa
 Route::post('transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
 
 Route::get('product/theme', [ProductThemeController::class, 'index'])->name('product_theme');
-Route::get('product/theme/store', [ProductThemeController::class, 'store'])->name('product_theme.store');
+Route::post('product/theme/store', [ProductThemeController::class, 'store'])->name('product_theme.store');
+Route::get('product/theme/edit/{id}', [ProductThemeController::class, 'edit'])->name('product_theme.edit');
+Route::post('product/theme/update/{id}', [ProductThemeController::class, 'update'])->name('product_theme.update'); 
 
 Route::get('data-pesanan', [OrderController::class, 'orderData'])->name('order_data');
 Route::post('data-pesanan/send', [OrderController::class, 'sendOrderData'])->name('send.order_data');
