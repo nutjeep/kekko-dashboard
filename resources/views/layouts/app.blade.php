@@ -7,6 +7,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <meta name="description" content="">
    <meta name="author" content="M Najib Abdulloh | anajibmuhammad@gmail.com">
+   <meta name="csrf-token" content="{{ csrf_token() }}">
 
    <title>{{ env('APP_NAME') }}</title>
 
@@ -19,6 +20,13 @@
 
    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
    
+   <style>
+      label {
+         font-size: 1rem;
+         color: rgb(42, 42, 42);
+      }
+   </style>
+
    @stack('style')
 
 </head>
@@ -44,7 +52,14 @@
 
                <!-- Begin Page Content -->
                <div class="container-fluid">
-                  
+
+                  @if (isset($back_button) && $back_button)
+                     <a href="{{ $back_button_route }}" class="btn btn-secondary mb-3">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                     </a>
+                  @endif
+
                   <section>
                      @yield('content')
                   </section>
