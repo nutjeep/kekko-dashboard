@@ -109,7 +109,7 @@
       <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
             <div class="modal-header">
-               <h5 class="modal-title font-weight-bold text-primary">Buat Tema</h5>
+               <h5 class="modal-title font-weight-bold text-primary">Edit Tema</h5>
                <button type="button" class="close" data-dismiss="modal">
                   <span>&times;</span>
                </button>
@@ -149,7 +149,7 @@
             $('#createModal').modal('show');
          });
 
-         // === EDIT THEME ===
+         // === UPDATE THEME ===
          $(document).on('click', '#btn-edit-theme', function() {
             let theme_id = $(this).data('id');
             let url = "{{ route('product_theme.edit', [':theme_id']) }}";
@@ -182,6 +182,9 @@
 
          $.ajax({
             url: url, 
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'POST',
             data: $(this).serialize(),
             success: function(response) {
@@ -189,8 +192,7 @@
                $('#editModal').find('#modal_name').val('');
                $('#editModal').find('#modal_name').focus();
                
-               // Refresh table
-               // location.reload();
+               location.reload();
             },
             error: function(error) {
                alert('Gagal mengambil data order.');

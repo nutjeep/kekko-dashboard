@@ -8,33 +8,33 @@ abstract class BaseRepository
 {
   protected $model;
 
-  public function __construct(Model $model)
-  {
-    $this->model = $model;
-  }
+   public function __construct(Model $model)
+   {
+      $this->model = $model;
+   }
 
-  public function get()
-  {
-    return $this->model->get();
-  }
+   public function get()
+   {
+      return $this->model->get();
+   }
 
-  public function find($id)
-  {
-    return $this->model->find($id);
-  }
+   public function find($id)
+   {
+      return $this->model->find($id);
+   }
 
-  public function create(array $data)
-  {
-    return $this->model->create($data);
-  }
+   public function create(array $data)
+   {
+      return $this->model->create($data);
+   }
 
-  public function update($id, array $data)
-  {
-    return $this->model->find($id)->update($data);
-  }
+   public function update($id, array $data)
+   {
+      return $this->model->find($id)->update($data);
+   }
 
-  public function delete($id)
-  {
-    return $this->model->find($id)->delete();
-  }
+   public function delete($id)
+   {
+      return $this->model->find($id)->delete();
+   }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ProductThemeController;
 use App\Http\Controllers\ProductPackageController;
@@ -16,6 +17,11 @@ Route::post('order/update/{id}', [OrderController::class, 'update'])->name('orde
 
 Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
 Route::post('transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
+
+Route::get('product', [ProductController::class, 'index'])->name('product');
+Route::post('product/store', [ProductController::class, 'store'])->name('product.store');
+Route::get('product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+Route::post('product/update/{id}', [ProductController::class, 'update'])->name('product.update');
 
 Route::get('product/theme', [ProductThemeController::class, 'index'])->name('product_theme');
 Route::post('product/theme/store', [ProductThemeController::class, 'store'])->name('product_theme.store');

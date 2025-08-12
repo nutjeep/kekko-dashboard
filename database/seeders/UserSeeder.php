@@ -11,17 +11,20 @@ class UserSeeder extends Seeder
    protected array $users = [
       [
          'name' => 'Kekko',
+         'nickname' => 'Kekko',
          'email' => 'admin@kekkoinvitation.com',
          'phone' => '085730739878',
          'password' => 'password',
       ],
       [
          'name' => 'M Najib Abdulloh',
+         'nickname' => 'Najib',
          'email' => 'najib@kekkoinvitation.com',
          'phone' => '083850296250',
          'password' => 'password',
       ],
    ];
+   
    public function run(): void
    {
       $usersSeed = $this->users;
@@ -33,6 +36,7 @@ class UserSeeder extends Seeder
 
          User::create([
             'name' => $user['name'],
+            'nickname' => $user['nickname'],
             'email' => $user['email'],
             'phone' => $user['phone'],
             'password' => Hash::make($user['password']),
