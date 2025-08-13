@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Product;
 
 class OrderRepository extends BaseRepository 
 {
@@ -25,5 +26,24 @@ class OrderRepository extends BaseRepository
    public function getEmployees()
    {
       return User::where('role_id', 2)->get();
+   }
+
+   public function getDigitalInvitations()
+   {
+      $digital_products = Product::where('type', 'digital')
+         ->where('is_active', true)
+         ->orderBy('name', 'asc')
+         ->get();
+
+      return $digital_products ?? [];
+   }
+
+   public function getPrintedInvitations()
+   {
+      $printed_products = Product::where('type', 'printed')
+         ->where('is_active', true)
+         ->get();
+
+      return $printed_products ?? [];
    }
 }

@@ -25,7 +25,8 @@ class Order extends Model
    protected $casts = [
       'order_information' => 'array',
       'groom_bride_data' => 'array',
-      'agenda_data' => 'array'
+      'agenda_data' => 'array',
+      'addons' => 'array'
    ];
 
    const STATUSES = [

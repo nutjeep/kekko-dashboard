@@ -187,22 +187,23 @@
                <div class="mb-3" id="digital_invitation_section">
                   <h3 class="h5">Undangan Digital</h3>
                   <div class="form-group mb-3">
-                     <label for="digital_theme">Tema Undangan</label>
-                     <select id="digital_theme" name="digital_theme" id="digital_theme" class="form-control">
-                        <option value="hazel">Hazel</option>
-                        <option value="heather">Heather</option>
-                        <option value="java heritage">Java Heritage</option>
+                     <label for="digital_name">Tema Undangan</label>
+                     <select id="digital_name" name="digital_name" id="digital_name" class="form-control">
+                        <option value="" disabled selected>Pilih Produk</option>
+                        @foreach ($digital_invitations as $digital)
+                           <option value="{{ $digital->name . ' | ' . $digital->product_package_name }}">{{ $digital->name }} | {{ $digital->product_package_name }}</option>
+                        @endforeach
                      </select>
                      <small>Katalog : <a target="_blank" href="https://kekkoinvitation.com/">Klik Disini</a></small>
                   </div>
-                  <div class="form-group mb-3">
+                  {{-- <div class="form-group mb-3">
                      <label for="digital_package">Paket Undangan</label>
                      <select id="digital_package" name="digital_package" id="digital_package" class="form-control">
                         <option value="basic">Basic</option>
                         <option value="premium">Premium</option>
                         <option value="exclusive">Exlusive</option>
                      </select>
-                  </div>
+                  </div> --}}
                </div>
             </div>
          </div>

@@ -136,6 +136,7 @@
          </div>
          <form action="{{ route('transaction.create') }}" method="post">
             @csrf
+            <input type="hidden" name="from_order" value="from_order">
             <div class="modal-body">
                <div class="row mb-3">
                   <div class="col-lg-6">

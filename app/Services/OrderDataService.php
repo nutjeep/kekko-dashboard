@@ -30,14 +30,13 @@ class OrderDataService
          'first_come' => $request->first_come,
          'invitation_type' => $request->invitation_type,
          'digital_invitation' => [
-               'theme' => $request->digital_theme,
-               'package' => $request->digital_package,
-               'price' => $request->digital_price ?? 0,
+            'name' => $request->digital_name,
+            'price' => $request->digital_price ?? 0,
          ],
          'printed_invitation' => [
-               'type' => $request->printed_type,
-               'quantity' => $request->printed_quantity ?? 0,
-               'price' => $request->digital_price ?? 0,
+            'type' => $request->printed_type,
+            'quantity' => $request->printed_quantity ?? 0,
+            'price' => $request->digital_price ?? 0,
          ]
       ];
    }
