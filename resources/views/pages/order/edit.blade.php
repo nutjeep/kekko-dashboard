@@ -37,134 +37,138 @@
          </button>
       </div>
    @endif
-
+   
    <form action="{{ route('order.update', $order->id) }}" method="post">
       @csrf
-      <div class="card shadow p-3 mb-3">
-         <h2>Data Pemesan</h2>
-         <div class="row">
-            <div class="col-lg-3">
-               <div class="form-group">
-                  <label for="status">Status</label>
-                  <select name="status" id="status" class="form-control">
-                     @foreach ($statuses as $status => $lable)
-                        <option value="{{ $status }}" {{ $order->status == $status ? 'selected' : '' }}>{{ $lable }}</option>
-                     @endforeach
-                  </select>
-               </div>
-            </div>
-            <div class="col-lg-3">
-               <div class="form-group">
-                  <label for="user_id">Employee</label>
-                  <select name="user_id" id="user_id" class="form-control">
-                     @foreach ($employees as $employee)
-                        @if ($employee->id == $order->user_id)
-                           <option value="{{ $employee->id }}" selected>{{ $employee->name }}</option>
-                        @else
-                           <option value="" selected disabled>Pilih Pegawai</option>
-                           <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                           <option value="">None</option>
-                        @endif
-                     @endforeach
-                  </select>
-               </div>
-            </div>
+      <div class="card shadowmb-3">
+         <div class="card-header">
+            <h2 class="m-0 font-weight-bold text-primary h4">Data Pemesan</h2>
          </div>
-         
-         <div class="row mb-3">
-            <div class="col-lg-6">
-               <div class="form-group mb-2">
-                  <label for="customer_name">Nama Pemesan</label>
-                  <div class="input-group mb-3">
-                     <input type="text" class="form-control" name="customer_name" value="{{ old('customer_name', $order->customer_name) }}" id="customer_name" aria-label="Recipient's username" aria-describedby="customer_name" >
-                     <div class="input-group-append">
-                        <button class="input-group-text" id="customer_name">copy</button>
+         <div class="card-body p-3 ">
+            <div class="row">
+               <div class="col-lg-3">
+                  <div class="form-group">
+                     <label for="status">Status</label>
+                     <select name="status" id="status" class="form-control">
+                        @foreach ($statuses as $status => $lable)
+                           <option value="{{ $status }}" {{ $order->status == $status ? 'selected' : '' }}>{{ $lable }}</option>
+                        @endforeach
+                     </select>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group">
+                     <label for="user_id">Employee</label>
+                     <select name="user_id" id="user_id" class="form-control">
+                        @foreach ($employees as $employee)
+                           @if ($employee->id == $order->user_id)
+                              <option value="{{ $employee->id }}" selected>{{ $employee->name }}</option>
+                           @else
+                              <option value="" selected disabled>Pilih Pegawai</option>
+                              <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                              <option value="">None</option>
+                           @endif
+                        @endforeach
+                     </select>
+                  </div>
+               </div>
+            </div>
+            
+            <div class="row mb-3">
+               <div class="col-lg-6">
+                  <div class="form-group mb-2">
+                     <label for="customer_name">Nama Pemesan</label>
+                     <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="customer_name" value="{{ old('customer_name', $order->customer_name) }}" id="customer_name" aria-label="Recipient's username" aria-describedby="customer_name" >
+                        <div class="input-group-append">
+                           <button class="input-group-text" id="customer_name">copy</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <div class="form-group mb-2">
+                     <label for="customer_phone">No Whatsapp</label>
+                     <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="customer_phone" value="{{ old('customer_phone', $order->customer_phone) }}" id="customer_phone" aria-label="Recipient's username" aria-describedby="customer_phone" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                        <div class="input-group-append">
+                           <button class="input-group-text" id="customer_phone">copy</button>
+                        </div>
                      </div>
                   </div>
                </div>
             </div>
-            <div class="col-lg-6">
-               <div class="form-group mb-2">
-                  <label for="customer_phone">No Whatsapp</label>
-                  <div class="input-group mb-3">
-                     <input type="text" class="form-control" name="customer_phone" value="{{ old('customer_phone', $order->customer_phone) }}" id="customer_phone" aria-label="Recipient's username" aria-describedby="customer_phone" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
-                     <div class="input-group-append">
-                        <button class="input-group-text" id="customer_phone">copy</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
 
-         <div class="row">
-            <div class="col-lg-4" id="invitation_type">
-               <h3 class="h5">Nama Yang Didahulukan</h3>
-               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="first_come" id="first_come_groom" value="groom" @if($order->order_information['first_come'] == 'groom') checked @endif>
-                  <label class="form-check-label" for="first_come_groom">
-                     Pria
-                  </label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="first_come" id="first_come_bride" value="bride" @if($order->order_information['first_come'] == 'bride') checked @endif>
-                  <label class="form-check-label" for="first_come_bride">
-                     Wanita
-                  </label>
-               </div>
-            </div>
-            <div class="col-lg-4">
-               <h3 class="h5">Tipe Undangan</h3>
-               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="invitation_type" id="printed_invitation" value="printed_invitation" @if($order->order_information['invitation_type'] == 'printed_invitation') checked @endif>
-                  <label class="form-check-label" for="printed_invitation">
-                     Cetak
-                  </label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="invitation_type" id="digital_invitation" value="digital_invitation" @if($order->order_information['invitation_type'] == 'digital_invitation') checked @endif>
-                  <label class="form-check-label" for="digital_invitation">
-                     Digital
-                  </label>
-               </div>
-               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="invitation_type" id="printed_digital" value="printed_digital" @if($order->order_information['invitation_type'] == 'printed_digital') checked @endif>
-                  <label class="form-check-label" for="printed_digital">
-                     Cetak & Digital
-                  </label>
-               </div>
-            </div>
-            <div class="col-lg-4">
-               <div class="mb-3" id="digital_invitation_section">
-                  <h3 class="h5">Undangan Digital</h3>
-                  <div class="form-group mb-3">
-                     <label for="digital_theme">Tema Undangan</label>
-                     <select id="digital_theme" name="digital_theme" class="form-control">
-                        <option value="">Hazel</option>
-                        <option value="">Heather</option>
-                        <option value="">Java Heritage</option>
-                     </select>
-                     <small>Katalog : <a target="_blank" href="https://kekkoinvitation.com/">Klik Disini</a></small>
+            <div class="row">
+               <div class="col-lg-4" id="invitation_type">
+                  <h3 class="h5  font-weight-bold">Nama Yang Didahulukan</h3>
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="first_come" id="first_come_groom" value="groom" @if($order->order_information['first_come'] == 'groom') checked @endif>
+                     <label class="form-check-label" for="first_come_groom">
+                        Pria
+                     </label>
                   </div>
-                  <div class="form-group mb-3">
-                     <label for="digital_package">Paket Undangan</label>
-                     <select id="digital_package" name="digital_package" class="form-control">
-                        <option value="">Basic</option>
-                        <option value="">Premium</option>
-                        <option value="">Exlusive</option>
-                     </select>
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="first_come" id="first_come_bride" value="bride" @if($order->order_information['first_come'] == 'bride') checked @endif>
+                     <label class="form-check-label" for="first_come_bride">
+                        Wanita
+                     </label>
                   </div>
                </div>
-               
-               <div class="mb-3" id="printed_invitation_section">
-                  <h3 class="h5">Undangan Cetak</h3>
-                  <div class="form-group mb-3">
-                     <label for="printed_type">Tipe Undangan</label>
-                     <input id="printed_type" name="printed_type" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" value="{{ $order->order_information['printed_invitation']['type'] }}">
-                     <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
+               <div class="col-lg-4">
+                  <h3 class="h5  font-weight-bold">Tipe Undangan</h3>
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="invitation_type" id="printed_invitation" value="printed_invitation" @if($order->order_information['invitation_type'] == 'printed_invitation') checked @endif>
+                     <label class="form-check-label" for="printed_invitation">
+                        Cetak
+                     </label>
                   </div>
-                  <div class="form-group mb-3">
-                     <label for="printed_quantity">Jumlah</label>
-                     <input type="text" id="printed_quantity" name="printed_quantity" inputmode="numeric" class="form-control" placeholder="Ex: 100" value="{{ $order->order_information['printed_invitation']['quantity'] }}">
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="invitation_type" id="digital_invitation" value="digital_invitation" @if($order->order_information['invitation_type'] == 'digital_invitation') checked @endif>
+                     <label class="form-check-label" for="digital_invitation">
+                        Digital
+                     </label>
+                  </div>
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="invitation_type" id="printed_digital" value="printed_digital" @if($order->order_information['invitation_type'] == 'printed_digital') checked @endif>
+                     <label class="form-check-label" for="printed_digital">
+                        Cetak & Digital
+                     </label>
+                  </div>
+               </div>
+               <div class="col-lg-4">
+                  <div class="mb-3" id="digital_invitation_section">
+                     <h3 class="h5  font-weight-bold">Undangan Digital</h3>
+                     <div class="form-group mb-3">
+                        <label for="digital_theme">Tema Undangan</label>
+                        <select id="digital_theme" name="digital_theme" class="form-control">
+                           <option value="">Hazel</option>
+                           <option value="">Heather</option>
+                           <option value="">Java Heritage</option>
+                        </select>
+                        <small>Katalog : <a target="_blank" href="https://kekkoinvitation.com/">Klik Disini</a></small>
+                     </div>
+                     <div class="form-group mb-3">
+                        <label for="digital_package">Paket Undangan</label>
+                        <select id="digital_package" name="digital_package" class="form-control">
+                           <option value="">Basic</option>
+                           <option value="">Premium</option>
+                           <option value="">Exlusive</option>
+                        </select>
+                     </div>
+                  </div>
+                  
+                  <div class="mb-3" id="printed_invitation_section">
+                     <h3 class="h5  font-weight-bold">Undangan Cetak</h3>
+                     <div class="form-group mb-3">
+                        <label for="printed_type">Tipe Undangan</label>
+                        <input id="printed_type" name="printed_type" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" value="{{ $order->order_information['printed_invitation']['type'] }}">
+                        <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
+                     </div>
+                     <div class="form-group mb-3">
+                        <label for="printed_quantity">Jumlah</label>
+                        <input type="text" id="printed_quantity" name="printed_quantity" inputmode="numeric" class="form-control" placeholder="Ex: 100" value="{{ $order->order_information['printed_invitation']['quantity'] }}">
+                     </div>
                   </div>
                </div>
             </div>
@@ -174,7 +178,7 @@
       <div class="card shadow p-3 mb-3" id="data-pengantin">
          <div class="row mb-2">
             <div class="col-lg-6 px-3" id="groom">
-               <h2>Data Mempelai Pria</h2>
+               <h2 class="font-weight-bold text-primary h4">Data Mempelai Pria</h2>
                <div class="form-group mb-3">
                   <label for="groom_name">Nama Lengkap</label>
                   <div class="input-group mb-3">
@@ -250,7 +254,7 @@
                </div>
             </div>
             <div class="col-lg-6 px-3" id="bride">
-               <h2>Data Mempelai Wanita</h2>
+               <h2 class="font-weight-bold text-primary h4">Data Mempelai Wanita</h2>
                <div class="form-group mb-3">
                   <label for="bride_name">Nama Lengkap</label>
                   <div class="input-group mb-3">
@@ -327,7 +331,7 @@
             </div>
          </div>
          <div class="others">
-            <h2>Lain - Lain</h2>
+            <h2 class="font-weight-bold text-primary h4">Lain - Lain</h2>
             <div class="form-group mb-3">
                <label for="link_gdrive">Link Gdrive Foto / Video</label>
                <input type="text" name="link_gdrive" value="{{ old('link_gdrive', $order->groom_bride_data['others']['link_gdrive']) }}" id="link_gdrive" class="form-control">
@@ -344,10 +348,10 @@
       </div>
 
       <div class="card shadow p-3">
-         <h2>Acara</h2>
+         <h2 class="font-weight-bold text-primary h4">Acara</h2>
          <div class="row">
             <div class="col-lg-4">
-               <h3 class="h5">Akad Nikah</h3>
+               <h3 class="h5  font-weight-bold">Akad Nikah</h3>
                <div class="form-group mb-3">
                   <label for="akad_date">Tanggal</label>
                   <input type="date" id="akad_date" class="form-control" name="akad_date" value="{{ old('akad_date', $order->agenda_data['akad']['date']) }}">
@@ -387,7 +391,7 @@
             </div>
 
             <div class="col-lg-4">
-               <h3 class="h5">Resepsi Pernikahan</h3>
+               <h3 class="h5  font-weight-bold">Resepsi Pernikahan</h3>
                <div class="form-group mb-3">
                   <label for="resepsi_date">Tanggal</label>
                   <input type="date" id="resepsi_date" class="form-control" name="resepsi_date" value="{{ old('resepsi_date', $order->agenda_data['resepsi']['date']) }}">
@@ -427,7 +431,7 @@
             </div>
             
             <div class="col-lg-4">
-               <h3 class="h5">Ngunduh Mantu</h3>
+               <h3 class="h5  font-weight-bold">Ngunduh Mantu</h3>
                <div class="form-group mb-3">
                   <label for="ngunduh_mantu_date">Tanggal</label>
                   <input type="date" id="ngunduh_mantu_date" class="form-control" name="ngunduh_mantu_date" value="{{ old('ngunduh_mantu_date', $order->agenda_data['ngunduh_mantu']['date']) }}">

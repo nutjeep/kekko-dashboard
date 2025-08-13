@@ -171,6 +171,19 @@
 
                <hr>
 
+               <div class="mb-3" id="printed_invitation_section">
+                  <h3 class="h5">Undangan Cetak</h3>
+                  <div class="form-group mb-3">
+                     <label for="printed_type">Tipe Undangan</label>
+                     <input id="printed_type" name="printed_type" id="printed_type" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" oninput="this.value = this.value.replace(/\s{2,}/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());">
+                     <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
+                  </div>
+                  <div class="form-group mb-3">
+                     <label for="printed_quantity">Jumlah</label>
+                     <input type="text" id="printed_quantity" name="printed_quantity" inputmode="numeric" class="form-control" placeholder="Ex: 100" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                  </div>
+               </div>
+
                <div class="mb-3" id="digital_invitation_section">
                   <h3 class="h5">Undangan Digital</h3>
                   <div class="form-group mb-3">
@@ -189,19 +202,6 @@
                         <option value="premium">Premium</option>
                         <option value="exclusive">Exlusive</option>
                      </select>
-                  </div>
-               </div>
-
-               <div class="mb-3" id="printed_invitation_section">
-                  <h3 class="h5">Undangan Cetak</h3>
-                  <div class="form-group mb-3">
-                     <label for="printed_type">Tipe Undangan</label>
-                     <input id="printed_type" name="printed_type" id="printed_type" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" oninput="this.value = this.value.replace(/\s{2,}/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());">
-                     <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
-                  </div>
-                  <div class="form-group mb-3">
-                     <label for="printed_quantity">Jumlah</label>
-                     <input type="text" id="printed_quantity" name="printed_quantity" inputmode="numeric" class="form-control" placeholder="Ex: 100" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
                   </div>
                </div>
             </div>

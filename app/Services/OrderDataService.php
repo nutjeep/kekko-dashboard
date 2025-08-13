@@ -16,10 +16,11 @@ class OrderDataService
          'customer_name' => $request->customer_name,
          'user_id' => $request->user_id,
          'customer_phone' => $request->customer_phone,
-         'status' => $request->status ?? 'pending',
+         'status' => $request->status ?? '',
          'order_information' => self::prepareOrderInformation($request),
          'groom_bride_data' => self::prepareGroomBrideData($request),
          'agenda_data' => self::prepareAgendaData($request),
+         'addons' => self::prepareAddons($request),
       ];
    }
 
@@ -31,10 +32,22 @@ class OrderDataService
          'digital_invitation' => [
                'theme' => $request->digital_theme,
                'package' => $request->digital_package,
+               'price' => $request->digital_price ?? 0,
          ],
          'printed_invitation' => [
                'type' => $request->printed_type,
                'quantity' => $request->printed_quantity ?? 0,
+               'price' => $request->digital_price ?? 0,
+         ]
+      ];
+   }
+
+   protected static function prepareAddons(Request $request): array
+   {
+      return [
+         'addon_1' => [
+            'name' => $request->addon_1_name,
+            'price' => $request->addon_1_price, 
          ]
       ];
    }
