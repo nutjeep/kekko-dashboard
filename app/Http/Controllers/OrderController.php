@@ -22,7 +22,11 @@ class OrderController extends Controller
    public function index()
    {
       $orders = $this->orderRepository->getOrder();
-      return view('pages.order.index', compact('orders'));
+      $employees = $this->orderRepository->getEmployees();
+      $statuses = $this->orderRepository->getStatuses();
+
+      return view('pages.order.index',
+         compact('orders', 'employees', 'statuses'));
    }
 
    public function show($id)
@@ -35,10 +39,12 @@ class OrderController extends Controller
       $statuses = $this->orderRepository->getStatuses();
       $order = $this->orderRepository->find($id);
       $employees = $this->orderRepository->getEmployees();
+      $product_digital_invitations = $this->orderRepository->getProductDigitalInvitations();
       $back_button = true;
       $back_button_route = route('order');
+
       return view('pages.order.edit', 
-         compact('order', 'statuses', 'employees', 'back_button', 'back_button_route'));
+         compact('order', 'statuses', 'employees', 'back_button', 'back_button_route', 'product_digital_invitations'));
    }
 
    public function update(Request $request, $id)
@@ -62,7 +68,7 @@ class OrderController extends Controller
 
    public function orderData()
    {
-      $digital_invitations = $this->orderRepository->getDigitalInvitations();
+      $digital_invitations = $this->orderRepository->getProductDigitalInvitations();
 
       return view('pages.order.order_data', compact('digital_invitations'));
    }

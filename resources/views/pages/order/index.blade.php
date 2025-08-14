@@ -2,6 +2,14 @@
 
 @push('style')
    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+   <style>
+      p.label {
+         font-size: 1rem;
+         color: rgb(42, 42, 42);
+         display: inline-block;
+         margin-bottom: .5rem;
+      }
+   </style>
 @endpush
 
 @section('content')
@@ -59,7 +67,7 @@
                         </td>
                         <td>{{ $order->formatted_created_at }}</td>
                         <td>{{ $order->user_name }}</td>
-                        <td style="display: flex; flex-direction: column; gap: 5px;">
+                        <td style="display:flex; flex-direction:column; gap:5px;">
                            @if ($order->status == 'pending')
                               <span class="btn btn-sm btn-secondary">
                                  Pending
@@ -80,6 +88,8 @@
                               <span class="btn btn-sm btn-danger">
                                  Canceled
                               </span>
+                           @else
+                              -
                            @endif
                         </td>
                         <td>
@@ -134,10 +144,30 @@
                <span>&times;</span>
             </button>
          </div>
-         <form action="{{ route('transaction.create') }}" method="post">
+         <form action="{{ route('transaction.store') }}" method="post">
             @csrf
-            <input type="hidden" name="from_order" value="from_order">
+            <input type="hidden" name="trx_from" value="order">
             <div class="modal-body">
+               <div class="row mb-3">
+                  <div class="col-lg-6">
+                     <label for="employee_id">Pegawai</label>
+                     <select name="employee_id" id="employee_id" class="form-control">
+                        <option value="" disabled selected>Pilih Pegawai</option>
+                        @foreach ($employees as $employee)
+                           <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                        @endforeach
+                     </select>
+                  </div>
+                  <div class="col-lg-6">
+                     <label for="modal_customer_phone">Status Order</label>
+                     <select name="order_status" id="status" class="form-control">
+                        <option value="" disabled selected>Pilih Status</option>
+                        @foreach ($statuses as $status => $lable)
+                           <option value="{{ $status }}">{{ $lable }}</option>
+                        @endforeach
+                     </select>
+                  </div>
+               </div>
                <div class="row mb-3">
                   <div class="col-lg-6">
                      <label for="modal_customer_name">Nama Pemesan</label>
@@ -154,8 +184,8 @@
                      <input type="date" class="form-control" name="order_date" id="order_date" value="" disabled>
                   </div>
                   <div class="col-lg-6">
-                     <label for="due_date">Batas Waktu</label>
-                     <input type="date" class="form-control" name="due_date" id="due_date" value="">
+                     <label for="order_due_date">Batas Waktu</label>
+                     <input type="date" class="form-control" name="order_due_date" id="order_due_date" value="">
                   </div>
                </div>
 
@@ -163,25 +193,18 @@
 
                <h6 class="h6 font-weight-bold text-dark">Undangan Digital</h6>
                <div class="row mb-3 digital_invitation_section">
-                  <div class="col-lg-4">
-                     <label for="">Tema Undangan</label>
-                     <select class="form-control" disabled>
-                        <option value="">Java Heritage</option>
-                     </select>
+                  <div class="col-lg-6">
+                     <p class="label">Produk</p>
+                     <br>
+                     <span class="h6 text-primary" id="modal_digital_name"></span>
                   </div>
                   <div class="col-lg-4">
-                     <label for="">Paket Undangan</label>
-                     <select class="form-control" disabled>
-                        <option value="">Basic</option>
-                     </select>
-                  </div>
-                  <div class="col-lg-4">
-                     <label for="digital_price text-primary">Harga</label>
+                     <label for="order_digital_price text-primary">Harga</label>
                      <div class="input-group">
                         <div class="input-group-prepend">
-                           <span class="input-group-text bg-primary text-white" id="digital_price">Rp: </span>
+                           <span class="input-group-text bg-primary text-white" id="order_digital_price">Rp: </span>
                         </div>
-                        <input type="text" class="form-control" name="digital_price" aria-label="digital_price" aria-describedby="digital_price" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                        <input type="text" class="form-control" name="order_digital_price" aria-label="order_digital_price" aria-describedby="order_digital_price" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
                      </div>
                   </div>
                </div>
@@ -189,20 +212,21 @@
                <h6 class="h6 mt-4 font-weight-bold text-dark">Undangan Cetak</h6>
                <div class="row printed_invitation_section">
                   <div class="col-lg-4">
-                     <label for="printed_type">Tipe Undangan</label>
-                     <input type="text" class="form-control" name="printed_type" id="printed_type" disabled>
+                     <p class="label">Tipe Undangan</p>
+                     <br>
+                     <span class="text-primary" id="modal_printed_type"></span>
+                  </div>
+                  <div class="col-lg-2">
+                     <label for="order_printed_quantity">Jumlah</label>
+                     <input type="text" class="form-control" name="order_printed_quantity" id="order_printed_quantity">
                   </div>
                   <div class="col-lg-4">
-                     <label for="printed_quantity">Jumlah</label>
-                     <input type="text" class="form-control" name="printed_quantity" id="printed_quantity" disabled>
-                  </div>
-                  <div class="col-lg-4">
-                     <label for="printed_price">Harga: </label>
+                     <label for="order_printed_price">Total Harga: </label>
                      <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                           <span class="input-group-text bg-primary text-white" id="printed_price">Rp: </span>
+                           <span class="input-group-text bg-primary text-white" id="order_printed_price">Rp: </span>
                         </div>
-                        <input type="text" class="form-control" name="printed_price" aria-label="printed_price" aria-describedby="printed_price" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                        <input type="text" class="form-control" name="order_printed_price" aria-label="order_printed_price" aria-describedby="order_printed_price" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
                      </div>
                   </div>
                </div>
@@ -212,17 +236,17 @@
                   <div class="row mb-2" id="addons-1">
                      <div class="col-lg-6">
                         <div class="form-group mb-3">
-                           <label for="addon_1_name">Nama</label>
-                           <input type="text" class="form-control" name="addon_1_name" aria-label="addon_1_name" aria-describedby="addon_1_name">
+                           <label for="order_addon_1_name">Nama</label>
+                           <input type="text" class="form-control" name="order_addon_1_name" aria-label="order_addon_1_name" aria-describedby="order_addon_1_name">
                         </div>
                      </div>
                      <div class="col-lg-6">
-                        <label for="addon_1_price">Harga: </label>
+                        <label for="order_addon_1_price">Harga: </label>
                         <div class="input-group mb-3">
                            <div class="input-group-prepend">
-                              <span class="input-group-text bg-primary text-white" id="addon_1_price">Rp</span>
+                              <span class="input-group-text bg-primary text-white" id="order_addon_1_price">Rp</span>
                            </div>
-                           <input type="text" id="addon_1_price" class="form-control" name="addon_1_price" aria-label="addon_1_price" aria-describedby="addon_1_price" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                           <input type="text" id="order_addon_1_price" class="form-control" name="order_addon_1_price" aria-label="order_addon_1_price" aria-describedby="order_addon_1_price" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
                         </div>
                      </div>
                      {{-- <div class="col-lg-1">
@@ -234,7 +258,7 @@
                </div>
 
                <div class="total_section">
-                  <h5 class="text-dark h4 font-weight-bold">Total :</h5>
+                  <h5 class="text-dark h4 font-weight-bold">Grand Total :</h5>
                   <div class="input-group mb-3">
                      <div class="input-group-prepend">
                         <span class="input-group-text bg-primary text-white font-weight-bold" id="total_price">Rp</span>
@@ -243,15 +267,12 @@
                   </div>
                </div>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
-                  <h5 class="text-dark h3 font-weight-bold">Total : <span id="total_price"></span></h5>
-                  <div class="d-flex">
-                     <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary">
-                        Proses Transaksi
-                        <i class="fas fa-arrow-right"></i>
-                     </button>
-                  </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-danger mr-1" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">
+                  Proses Transaksi
+                  <i class="fas fa-arrow-right"></i>
+               </button>
             </div>
          </form>
       </div>
@@ -267,7 +288,6 @@
    <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 
    <script>
-
       $(document).ready(function() {
          $(document).on('click', '.btn-show-order', function() {
             let order_id = $(this).data('id');
@@ -278,9 +298,18 @@
                url: url,
                type: 'GET',
                success: function(response) {
+                  // console.log('response : ', response);
+                  const created_at = new Date(response.created_at);
+                  const formatted_date = created_at.toISOString().split('T')[0];
+                  
                   $('#modal_order_id').text(response.order_id);
                   $('#modal_customer_name').val(response.customer_name);
                   $('#modal_customer_phone').val(response.customer_phone);
+                  $('#modal_digital_name').text(response.order_information.digital_invitation.name ?? '-');
+                  $('#modal_printed_type').text(response.order_information.printed_invitation.type ?? '-');
+                  $('input[name="order_date"]').val(formatted_date);
+                  $('#employee_id').val(response.user_id);
+                  $('#status').val(response.status);
 
                   $('#orderModal').modal('show');
                },
@@ -304,16 +333,16 @@
 
          // Calculate Total Price
          function calculateTotal() {
-            let digitalPrice = unformatNumber($('input[name="digital_price"]').val());
-            let printedPrice = unformatNumber($('input[name="printed_price"]').val());
-            let addonPrice = unformatNumber($('input[name="addon_1_price"]').val());
+            let digitalPrice = unformatNumber($('input[name="order_digital_price"]').val());
+            let printedPrice = unformatNumber($('input[name="order_printed_price"]').val());
+            let addonPrice = unformatNumber($('input[name="order_addon_1_price"]').val());
 
             let total = digitalPrice + printedPrice + addonPrice;
 
             $('input[name="total_price"]').val(formatNumber(total));
          }
          
-         $('input[name="digital_price"], input[name="printed_price"], input[name="addon_1_price"]').on('input', function() {
+         $('input[name="order_digital_price"], input[name="order_printed_price"], input[name="order_addon_1_price"]').on('input', function() {
             let value = $(this).val();
             let unformatted = unformatNumber(value);
             $(this).val(formatNumber(unformatted));

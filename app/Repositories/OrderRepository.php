@@ -28,7 +28,7 @@ class OrderRepository extends BaseRepository
       return User::where('role_id', 2)->get();
    }
 
-   public function getDigitalInvitations()
+   public function getProductDigitalInvitations()
    {
       $digital_products = Product::where('type', 'digital')
          ->where('is_active', true)
@@ -38,7 +38,7 @@ class OrderRepository extends BaseRepository
       return $digital_products ?? [];
    }
 
-   public function getPrintedInvitations()
+   public function getProductPrintedInvitations()
    {
       $printed_products = Product::where('type', 'printed')
          ->where('is_active', true)

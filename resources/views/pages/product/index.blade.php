@@ -44,6 +44,7 @@
                      <th>Tema</th>
                      <th>Paket</th>
                      <th>Tipe</th>
+                     <th>Harga</th>
                      <th>Created At</th>
                      <th>Action</th>
                   </tr>
@@ -54,7 +55,8 @@
                      <th>Nama Produk</th>
                      <th>Tema</th>
                      <th>Paket</th>
-                     <th>Paket</th>
+                     <th>Tipe</th>
+                     <th>Harga</th>
                      <th>Created At</th>
                      <th>Action</th>
                   </tr>
@@ -77,6 +79,7 @@
                            </span>
                            @endif
                         </td>
+                        <td>{{ $product->price ?? 'Not set' }}</td>
                         <td>{{ $product->formatted_created_at }}</td>
                         <td>
                            <div style="display: flex; gap: 5px;">

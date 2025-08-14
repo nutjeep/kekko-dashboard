@@ -174,8 +174,8 @@
                <div class="mb-3" id="printed_invitation_section">
                   <h3 class="h5">Undangan Cetak</h3>
                   <div class="form-group mb-3">
-                     <label for="printed_type">Tipe Undangan</label>
-                     <input id="printed_type" name="printed_type" id="printed_type" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" oninput="this.value = this.value.replace(/\s{2,}/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());">
+                     <label for="printed_name">Tipe Undangan</label>
+                     <input id="printed_name" name="printed_name" id="printed_name" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" oninput="this.value = this.value.replace(/\s{2,}/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());">
                      <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
                   </div>
                   <div class="form-group mb-3">
@@ -187,23 +187,16 @@
                <div class="mb-3" id="digital_invitation_section">
                   <h3 class="h5">Undangan Digital</h3>
                   <div class="form-group mb-3">
-                     <label for="digital_name">Tema Undangan</label>
-                     <select id="digital_name" name="digital_name" id="digital_name" class="form-control">
+                     <label for="digital_id">Tema Undangan</label>
+                     <select id="digital_id" name="digital_id" class="form-control">
                         <option value="" disabled selected>Pilih Produk</option>
                         @foreach ($digital_invitations as $digital)
-                           <option value="{{ $digital->name . ' | ' . $digital->product_package_name }}">{{ $digital->name }} | {{ $digital->product_package_name }}</option>
+                           <option value="{{ $digital->id }}">{{ $digital->name }} | {{ $digital->product_package_name }}</option>
                         @endforeach
                      </select>
+                     <input type="hidden" name="digital_name" value="">
                      <small>Katalog : <a target="_blank" href="https://kekkoinvitation.com/">Klik Disini</a></small>
                   </div>
-                  {{-- <div class="form-group mb-3">
-                     <label for="digital_package">Paket Undangan</label>
-                     <select id="digital_package" name="digital_package" id="digital_package" class="form-control">
-                        <option value="basic">Basic</option>
-                        <option value="premium">Premium</option>
-                        <option value="exclusive">Exlusive</option>
-                     </select>
-                  </div> --}}
                </div>
             </div>
          </div>
@@ -551,20 +544,35 @@
 
       // -- VALIDASI FORM TIPE UNDANGAN
       document.querySelector('form').addEventListener('submit', function(e) {
-         const selectedType = $('input[name="invitation_type"]:checked').value;
-         const digitalTheme = $('#digital_theme').value;
-         const printedType = $('#printed_type').value;
+         const selected_type = $('input[name="invitation_type"]:checked').value;
+         const digital_theme = $('#digital_theme').value;
+         const printed_type = $('#printed_name').value;
          
-         if (selectedType.includes('digital') && !digitalTheme) {
+         if (selected_type.includes('digital') && !digital_theme) {
             e.preventDefault();
             alert('Silakan pilih tema undangan digital');
          }
          
-         if (selectedType.includes('printed') && !printedType) {
+         if (selected_type.includes('printed') && !printed_type) {
             e.preventDefault();
             alert('Silakan isi tipe undangan cetak');
          }
       });
+
+      // === Fungsi untuk mengupdate digital_name saat select berubah ===
+      $('#digital_id').on('change', function() {
+         // Ambil teks dari option yang dipilih
+         const selected_text = $(this).find('option:selected').text();
+         
+         // Set nilai input hidden digital_name
+         $('input[name="digital_name"]').val(selected_text);
+      });
+
+      // Jalankan juga saat halaman pertama kali dimuat (jika ada nilai yang sudah terpilih)
+      if ($('#digital_id').val()) {
+         const initial_text = $('#digital_id').find('option:selected').text();
+         $('input[name="digital_name"]').val(initial_text);
+      }
    
       // === CLOSE ALERT
       $('.btn-close-alert').click(function() {

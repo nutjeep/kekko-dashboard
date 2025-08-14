@@ -16,7 +16,7 @@ Route::get('order/get_by_id/{id}', [OrderController::class, 'getOrderById'])->na
 Route::post('order/update/{id}', [OrderController::class, 'update'])->name('order.update');
 
 Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
-Route::post('transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
+Route::post('transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
 
 Route::get('product', [ProductController::class, 'index'])->name('product');
 Route::post('product/store', [ProductController::class, 'store'])->name('product.store');

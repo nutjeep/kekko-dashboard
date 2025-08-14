@@ -23,6 +23,13 @@ class UserSeeder extends Seeder
          'phone' => '083850296250',
          'password' => 'password',
       ],
+      [
+         'name' => 'Habib Mubarok',
+         'nickname' => 'Habib',
+         'email' => 'habs@kekkoinvitation.com',
+         'phone' => '085730739878',
+         'password' => 'password',
+      ],
    ];
    
    public function run(): void
