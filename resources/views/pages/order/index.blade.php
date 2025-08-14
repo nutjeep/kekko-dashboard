@@ -298,7 +298,6 @@
                url: url,
                type: 'GET',
                success: function(response) {
-                  // console.log('response : ', response);
                   const created_at = new Date(response.created_at);
                   const formatted_date = created_at.toISOString().split('T')[0];
                   

@@ -8,15 +8,18 @@ use App\Services\OrderDataService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\OrderRepository;
+use App\Repositories\TransactionRepository;
 use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
    protected $orderRepository;
+   protected $transactionRepository;
 
-   public function __construct(OrderRepository $orderRepository)
+   public function __construct(OrderRepository $orderRepository, TransactionRepository $transactionRepository)
    {
       $this->orderRepository = $orderRepository;
+      $this->transactionRepository = $transactionRepository;
    }
 
    public function index()
@@ -53,11 +56,30 @@ class OrderController extends Controller
          DB::beginTransaction();
 
          $order_data = OrderDataService::prepareOrderData($request);
+
          $this->orderRepository->update($id, $order_data);
+         $order = $this->orderRepository->find($id);
+         
+         if($request->action == 'update_and_transaction') {
+            $transaction_data = [
+               'order_id' => $id,
+               'order_date' => $order->order_date ?? $order->created_at,
+               'due_date' => $request->due_date ?? null,
+               'total_amount' => $request->total_price ?? null,
+               'status' => 'pending'
+            ];
+
+            $this->transactionRepository->create($transaction_data);
+         }
 
          DB::commit();
+
+         $message = $request->action === 'update_and_transaction' 
+            ? 'Data Pesanan berhasil diupdate dan Transaksi Berhasil dibuat' 
+            : 'Data Pesanan berhasil diupdate';
+
          
-         return redirect()->back()->with('success', 'Data Pesanan Berhasil Diubah!');
+         return redirect()->back()->with('success', $message);
       }
       catch (ValidationException $e) {
          DB::rollBack();

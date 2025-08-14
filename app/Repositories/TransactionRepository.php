@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Transactions;
+use App\Models\Transaction;
 
 class TransactionRepository extends BaseRepository 
 {
-   public function __construct(Transactions $model) 
+   public function __construct(Transaction $model) 
    {
       parent::__construct($model);
    }

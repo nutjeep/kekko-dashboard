@@ -9,10 +9,6 @@
       h2, h3 {
          color: rgb(73, 73, 73);
       }
-
-      .btn-submit {
-         width: 50%;
-      }
    </style>
 @endpush
 
@@ -40,6 +36,7 @@
    
    <form action="{{ route('order.update', $order->id) }}" method="post">
       @csrf
+      @method('PUT')
       <div class="card shadow mb-3">
          <div class="card-header">
             <h2 class="m-0 font-weight-bold text-primary h4">Data Pemesan</h2>
@@ -85,6 +82,10 @@
                         </div>
                      </div>
                   </div>
+                  <div class="form-group mb-2">
+                     <label for="order_date">Tanggal Pesan</label>
+                     <input type="date" class="form-control" name="order_date" id="order_date" value="" disabled>
+                  </div>
                </div>
                <div class="col-lg-6">
                   <div class="form-group mb-2">
@@ -96,8 +97,14 @@
                         </div>
                      </div>
                   </div>
+                  <div class="form-group mb-2">
+                     <label for="due_date">Batas Waktu</label>
+                     <input type="date" class="form-control" name="due_date" id="due_date" value="">
+                  </div>
                </div>
             </div>
+
+            <hr>
 
             <div class="row">
                <div class="col-lg-4" id="invitation_type">
@@ -228,7 +235,7 @@
                      <div class="input-group-prepend">
                         <span class="input-group-text bg-primary text-white font-weight-bold" id="total_price">Rp</span>
                      </div>
-                     <input type="text" id="total_price" class="form-control" name="total_price" aria-label="total_price" aria-describedby="total_price" readonly>
+                     <input type="text" id="total_price" class="form-control" value="" name="total_price" aria-label="total_price" aria-describedby="total_price" readonly>
                   </div>
                </div>
             </div>
@@ -533,12 +540,18 @@
                   </div>
                </div>
             </div>
-            <div class="row justify-content-center my-5">
-               <button type="submit" class="btn-submit btn btn-primary"><strong class="text-white">Update Data</strong></button>
+            <div class="row justify-content-center my-5 d-flex">
+               <button type="submit" name="action" value="update_only" class="btn-update-data btn btn-info px-4 mr-3">
+                  <i class="fas fa-sync-alt mr-1"></i>
+                  <strong>Update Data</strong>
+               </button>
+               <button type="submit" name="action" value="update_and_transaction" class="btn-update-n-trx btn btn-primary px-4">
+                  <strong>Update & Buat Transaksi</strong>
+                  <i class="fas fa-chevron-right ml-1"></i>
+               </button>
             </div>
          </div>
       </div>
-      <div class="card shadow mb-3"></div>
    </form>
 @endsection
 
@@ -644,6 +657,11 @@
          });
 
          calculateTotal();
+
+         // Formating Created At
+         const created_at = new Date('{{ $order->order_date ?? $order->created_at }}');
+         const formatted_date = created_at.toISOString().split('T')[0];
+         $('#order_date').val(formatted_date);
       });
    </script>
 @endpush

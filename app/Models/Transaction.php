@@ -7,7 +7,7 @@ use App\Traits\FormattedDate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Transactions extends Model
+class Transaction extends Model
 {
    use SoftDeletes, FormattedDate;
    
@@ -20,7 +20,7 @@ class Transactions extends Model
       parent::boot();
 
       static::creating(function ($model) {
-         $today = Carbon::today()->format('yymmdd');
+         $today = Carbon::today()->format('dmy');
 
          // Hitung jumlah transaksi hari ini
          $count = self::whereDate('created_at', Carbon::today())->count() + 1;
@@ -28,8 +28,10 @@ class Transactions extends Model
          // Format urutan: 001, 002, dst.
          $sequence = str_pad($count, 3, '0', STR_PAD_LEFT);
 
-         // Generate nomor invoice
-         $model->invoice_number = 'INV-' . $today . '-' . $sequence;
+         $random_word = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
+         $words = substr($random_word, 0, 5);
+         
+         $model->invoice_number = 'INV-' . $words. '-' . $today . '-' . $sequence;
       });
    }
 

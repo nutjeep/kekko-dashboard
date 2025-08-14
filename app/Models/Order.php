@@ -42,11 +42,12 @@ class Order extends Model
       parent::boot();
       
       static::creating(function ($model) {
-         $today = Carbon::today()->format('ddmmyy');
-         $sequence = str_pad($model->id, 3, '0', STR_PAD_LEFT);
+         $today = Carbon::today()->format('dmy');
+         $count = self::whereDate('created_at', Carbon::today())->count() + 1;
+         $sequence = str_pad($count, 3, '0', STR_PAD_LEFT);
          $random_word = str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
          $words = substr($random_word, 0, 5);
-         $model->order_id = 'ORDER_ID-' . $words . $today . '-' . $sequence;
+         $model->order_id = 'ORDER_ID-' . $words . '-' . $today . '-' . $sequence;
       });
    }   
 
@@ -54,5 +55,15 @@ class Order extends Model
    public function getUserNameAttribute()
    {
       return $this->user?->name ?? '-';
+   }
+
+   public function formattedOrderDateAttribute()
+   {
+      return Carbon::parse($this->order_date)->translatedFormat('d F Y');
+   }
+
+   public function formattedDueDateAttribute()
+   {
+      return Carbon::parse($this->due_date)->translatedFormat('d F Y');
    }
 }

@@ -23,6 +23,7 @@ return new class extends Migration
          $table->string('status', 50)->nullable()->comment('pending | on progress | ready to check | done | canceled');
          $table->dateTime('due_date')->nullable();
          $table->integer('employee_id')->nullable();
+         $table->timestamp('order_date')->nullable();
          $table->timestamps();
          $table->softDeletes();
 

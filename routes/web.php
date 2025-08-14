@@ -13,7 +13,7 @@ Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 Route::get('order', [OrderController::class, 'index'])->name('order');
 Route::get('order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
 Route::get('order/get_by_id/{id}', [OrderController::class, 'getOrderById'])->name('order.get_by_id');
-Route::post('order/update/{id}', [OrderController::class, 'update'])->name('order.update');
+Route::put('order/update/{id}', [OrderController::class, 'update'])->name('order.update');
 
 Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
 Route::post('transaction/store', [TransactionController::class, 'store'])->name('transaction.store');

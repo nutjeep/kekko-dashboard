@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_number', 50);
-            $table->dateTime('order_date')->nullable();
-            $table->dateTime('due_date')->nullable();
+            $table->timestamp('order_date')->nullable();
+            $table->timestamp('due_date')->nullable();
             $table->string('status', 50)->nullable()->comment('pending | DP | Paid | Canceled');
             $table->string('dp_amount')->nullable();
-            $table->integer('total_amount')->nullable();
+            $table->string('total_amount')->nullable();
             $table->string('notes')->nullable();
             $table->integer('order_id')->nullable();
             $table->timestamps();
