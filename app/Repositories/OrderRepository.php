@@ -25,25 +25,29 @@ class OrderRepository extends BaseRepository
 
    public function getEmployees()
    {
-      return User::where('role_id', 2)->get();
+      return User::where('role_id', 2)
+        ->select('id', 'name', 'nickname')
+        ->get();
    }
 
    public function getProductDigitalInvitations()
    {
-      $digital_products = Product::where('type', 'digital')
+      $data = Product::where('type', 'digital')
          ->where('is_active', true)
+         ->select('id', 'name')
          ->orderBy('name', 'asc')
          ->get();
 
-      return $digital_products ?? [];
+      return $data ?? [];
    }
 
    public function getProductPrintedInvitations()
    {
-      $printed_products = Product::where('type', 'printed')
+      $data = Product::where('type', 'printed')
          ->where('is_active', true)
+         ->select('id', 'name')
          ->get();
 
-      return $printed_products ?? [];
+      return $data ?? [];
    }
 }

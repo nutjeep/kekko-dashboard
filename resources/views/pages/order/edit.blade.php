@@ -38,208 +38,203 @@
       @csrf
       @method('PUT')
       <div class="card shadow mb-3">
-         <div class="card-header">
-            <h2 class="m-0 font-weight-bold text-primary h4">Data Pemesan</h2>
-         </div>
-         <div class="card-body p-3">
-            <div class="row">
-               <div class="col-lg-3">
-                  <div class="form-group">
-                     <label for="status">Status</label>
-                     <select name="status" id="status" class="form-control">
-                        @foreach ($statuses as $status => $lable)
-                           <option value="{{ $status }}" {{ $order->status == $status ? 'selected' : '' }}>{{ $lable }}</option>
-                        @endforeach
-                     </select>
-                  </div>
-               </div>
-               <div class="col-lg-3">
-                  <div class="form-group">
-                     <label for="user_id">Pegawai</label>
-                     <select name="user_id" id="user_id" class="form-control">
-                        @foreach ($employees as $employee)
-                           @if ($employee->id == $order->user_id)
-                              <option value="{{ $employee->id }}" selected>{{ $employee->name }}</option>
-                           @else
-                              <option value="" selected disabled>Pilih Pegawai</option>
-                              <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                              <option value="">None</option>
-                           @endif
-                        @endforeach
-                     </select>
-                  </div>
-               </div>
-            </div>
-            
-            <div class="row mb-3">
-               <div class="col-lg-6">
-                  <div class="form-group mb-2">
-                     <label for="customer_name">Nama Pemesan</label>
-                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="customer_name" value="{{ old('customer_name', $order->customer_name) }}" id="customer_name" aria-label="Recipient's username" aria-describedby="customer_name" >
-                        <div class="input-group-append">
-                           <button class="input-group-text" id="customer_name">copy</button>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group mb-2">
-                     <label for="order_date">Tanggal Pesan</label>
-                     <input type="date" class="form-control" name="order_date" id="order_date" value="" disabled>
-                  </div>
-               </div>
-               <div class="col-lg-6">
-                  <div class="form-group mb-2">
-                     <label for="customer_phone">No Whatsapp</label>
-                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="customer_phone" value="{{ old('customer_phone', $order->customer_phone) }}" id="customer_phone" aria-label="Recipient's username" aria-describedby="customer_phone" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
-                        <div class="input-group-append">
-                           <button class="input-group-text" id="customer_phone">copy</button>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group mb-2">
-                     <label for="due_date">Batas Waktu</label>
-                     <input type="date" class="form-control" name="due_date" id="due_date" value="">
-                  </div>
-               </div>
-            </div>
+        <div class="card-header">
+          <h2 class="m-0 font-weight-bold text-primary h4">Data Pemesan</h2>
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status" class="form-control">
+                      @foreach ($statuses as $status => $lable)
+                          <option value="{{ $status }}" {{ $order->status == $status ? 'selected' : '' }}>{{ $lable }}</option>
+                      @endforeach
+                    </select>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="user_id">Pegawai</label>
+                    <select name="user_id" id="user_id" class="form-control">
+                      <option value="">Pilih Pegawai</option>
+                      @foreach ($employees as $employee)
+                        @if ($order->user_id !== null && $order->user_id == $employee->id)
+                          <option value="{{ $employee->id }}" selected>{{ $employee->name }}</option>
+                        @else
+                          <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                        @endif
+                      @endforeach
+                    </select>
+                </div>
+              </div>
+          </div>
+          
+          <div class="row mb-3">
+              <div class="col-lg-6">
+                <div class="form-group mb-2">
+                    <label for="customer_name">Nama Pemesan</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" name="customer_name" value="{{ old('customer_name', $order->customer_name) }}" id="customer_name" aria-label="Recipient's username" aria-describedby="customer_name" >
+                      <div class="input-group-append">
+                          <button class="input-group-text" id="customer_name">copy</button>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="order_date">Tanggal Pesan</label>
+                    {{-- <input type="date" class="form-control" name="order_date" id="order_date" value="" disabled> --}}
+                    <p>{{ $order->formatted_created_at }}</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group mb-2">
+                    <label for="customer_phone">No Whatsapp</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" name="customer_phone" value="{{ old('customer_phone', $order->customer_phone) }}" id="customer_phone" aria-label="Recipient's username" aria-describedby="customer_phone" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                      <div class="input-group-append">
+                          <button class="input-group-text" id="customer_phone">copy</button>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="due_date">Batas Waktu</label>
+                    <input type="date" class="form-control" name="due_date" id="due_date" value="">
+                </div>
+              </div>
+          </div>
 
-            <hr>
+          <hr>
 
-            <div class="row">
-               <div class="col-lg-4" id="invitation_type">
-                  <h3 class="h5 font-weight-bold">Nama Yang Didahulukan</h3>
-                  <div class="form-check">
-                     <input class="form-check-input" type="radio" name="first_come" id="first_come_groom" value="groom" @if($order->order_information['first_come'] == 'groom') checked @endif>
-                     <label class="form-check-label" for="first_come_groom">
-                        Pria
-                     </label>
+          <div class="row">
+              <div class="col-lg-3" id="invitation_type">
+                <h3 class="h5 font-weight-bold">Nama Yang Didahulukan</h3>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="first_come" id="first_come_groom" value="groom" @if($order->order_information['first_come'] == 'groom') checked @endif>
+                    <label class="form-check-label" for="first_come_groom">
+                      Pria
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="first_come" id="first_come_bride" value="bride" @if($order->order_information['first_come'] == 'bride') checked @endif>
+                    <label class="form-check-label" for="first_come_bride">
+                      Wanita
+                    </label>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <h3 class="h5  font-weight-bold">Tipe Undangan</h3>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="invitation_type" id="printed_invitation" value="printed_invitation" @if($order->order_information['invitation_type'] == 'printed_invitation') checked @endif>
+                    <label class="form-check-label" for="printed_invitation">
+                      Cetak
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="invitation_type" id="digital_invitation" value="digital_invitation" @if($order->order_information['invitation_type'] == 'digital_invitation') checked @endif>
+                    <label class="form-check-label" for="digital_invitation">
+                      Digital
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="invitation_type" id="printed_digital" value="printed_digital" @if($order->order_information['invitation_type'] == 'printed_digital') checked @endif>
+                    <label class="form-check-label" for="printed_digital">
+                      Cetak & Digital
+                    </label>
+                </div>
+              </div>
+            <div class="col-lg-3">
+              <div class="mb-3" id="printed_invitation_section">
+                <h3 class="h5 font-weight-bold">Undangan Cetak</h3>
+                <div class="form-group mb-3">
+                  <label for="printed_name">Tipe Undangan</label>
+                  <input id="printed_name" name="printed_name" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" value="{{ $order->order_information['printed_invitation']['name'] }}">
+                  <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
+                </div>
+                <div class="form-group">
+                  <label for="printed_quantity" class="font-weight-bold text-primary">Jumlah</label>
+                  <input type="text" id="printed_quantity" name="printed_quantity" inputmode="numeric" class="form-control" placeholder="Ex: 100" value="{{ $order->order_information['printed_invitation']['quantity'] }}">
+                </div>
+                <div class="form-group">
+                  <label for="printed_price" class="text-primary font-weight-bold">Harga</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-primary text-white" id="printed_price">Rp: </span>
+                      </div>
+                      <input type="text" id="printed_price" class="form-control" name="printed_price" inputmode="numeric" 
+                        value="{{ old('printed_price', $order->order_information['printed_invitation']['price']) == 0 ? '' : $order->order_information['printed_invitation']['price'] }}" 
+                        oninput="let value = this.value.replace(/[^\d.]/g, ''); //only numeric
+                            this.value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); //format ribuan" 
+                      >
                   </div>
-                  <div class="form-check">
-                     <input class="form-check-input" type="radio" name="first_come" id="first_come_bride" value="bride" @if($order->order_information['first_come'] == 'bride') checked @endif>
-                     <label class="form-check-label" for="first_come_bride">
-                        Wanita
-                     </label>
-                  </div>
-               </div>
-               <div class="col-lg-4">
-                  <h3 class="h5  font-weight-bold">Tipe Undangan</h3>
-                  <div class="form-check">
-                     <input class="form-check-input" type="radio" name="invitation_type" id="printed_invitation" value="printed_invitation" @if($order->order_information['invitation_type'] == 'printed_invitation') checked @endif>
-                     <label class="form-check-label" for="printed_invitation">
-                        Cetak
-                     </label>
-                  </div>
-                  <div class="form-check">
-                     <input class="form-check-input" type="radio" name="invitation_type" id="digital_invitation" value="digital_invitation" @if($order->order_information['invitation_type'] == 'digital_invitation') checked @endif>
-                     <label class="form-check-label" for="digital_invitation">
-                        Digital
-                     </label>
-                  </div>
-                  <div class="form-check">
-                     <input class="form-check-input" type="radio" name="invitation_type" id="printed_digital" value="printed_digital" @if($order->order_information['invitation_type'] == 'printed_digital') checked @endif>
-                     <label class="form-check-label" for="printed_digital">
-                        Cetak & Digital
-                     </label>
-                  </div>
-               </div>
-               <div class="col-lg-4">
-                  <div class="mb-3" id="printed_invitation_section">
-                     <h3 class="h5  font-weight-bold">Undangan Cetak</h3>
-                     <div class="form-group mb-3">
-                        <label for="printed_name">Tipe Undangan</label>
-                        <input id="printed_name" name="printed_name" type="text" class="form-control" placeholder="Ex: Tipe Zigna Mooi Lite" value="{{ $order->order_information['printed_invitation']['name'] }}">
-                        <small>Katalog : <a target="_blank" href="https://wa.me/c/6285730739878">Klik Disini</a></small>
-                     </div>
-                     <div class="form-group">
-                        <label for="printed_quantity" class="font-weight-bold text-primary">Jumlah</label>
-                        <input type="text" id="printed_quantity" name="printed_quantity" inputmode="numeric" class="form-control" placeholder="Ex: 100" value="{{ $order->order_information['printed_invitation']['quantity'] }}">
-                     </div>
-                     <div class="form-group">
-                        <label for="printed_price" class="text-primary font-weight-bold">Harga</label>
-                        <div class="input-group">
-                           <div class="input-group-prepend">
-                              <span class="input-group-text bg-primary text-white" id="printed_price">Rp: </span>
-                           </div>
-                           <input type="text" id="printed_price" class="form-control" name="printed_price" inputmode="numeric" 
-                              value="{{ old('printed_price', $order->order_information['printed_invitation']['price']) == 0 ? '' : $order->order_information['printed_invitation']['price'] }}" 
-                              oninput="let value = this.value.replace(/[^\d.]/g, ''); //only numeric
-                                 this.value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); //format ribuan" 
-                           >
-                        </div>
-                     </div>
-                  </div>
+                </div>
+              </div>
 
-                  <div class="mb-3" id="digital_invitation_section">
-                     <h3 class="h5 font-weight-bold">Undangan Digital</h3>
-                     <div class="form-group mb-3">
-                        <label for="digital_id">Tema Undangan</label>
-                        <select id="digital_id" name="digital_id" class="form-control">
-                           <option value="" disabled>Pilih Produk</option>
-                           @foreach ($product_digital_invitations as $digital)
-                              @if ($digital->id == $order->order_information['digital_invitation']['id'])
-                                 <option value="{{ $digital->id }}" selected>{{ $digital->name }} | {{ $digital->product_package_name }}</option>
-                              @else
-                                 <option value="{{ $digital->id }}">{{ $digital->name }} | {{ $digital->product_package_name }}</option>
-                              @endif
-                           @endforeach
-                        </select>
-                        <small>Katalog : <a target="_blank" href="https://kekkoinvitation.com/">Klik Disini</a></small>
-                     </div>
-                     <div class="form-group">
-                        <label for="digital_price" class="text-primary font-weight-bold">Harga</label>
-                        <div class="input-group mb-3">
-                           <div class="input-group-prepend">
-                              <span class="input-group-text bg-primary text-white" id="digital_price">Rp: </span>
-                           </div>
-                           <input type="text" id="digital_price" class="form-control" name="digital_price" 
-                              inputmode="numeric"
-                              value="{{ old('digital_price', $order->order_information['digital_invitation']['price']) == 0 ? '' : $order->order_information['digital_invitation']['price'] }}" 
-                              oninput="let value = this.value.replace(/[^\d.]/g, ''); 
-                                 this.value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');"
-                           >
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-
-            <div class="row mb-3">
-               <div class="col-lg-12">
-                  <h3 class="h5 font-weight-bold">Addons</h3>
-                  <div style="display: flex; gap: 10px;">
-                     <div class="form-group" style="width: 33%;">
-                        <label for="addon_1_name">Nama</label>
-                        <textarea id="addon_1_name" class="form-control" rows="3" name="addon_1_name">{{ $order->addons['addon_1']['name'] }}</textarea>
-                     </div>
-                     <div class="form-group">
-                        <label for="addon_1_name">Harga</label>
-                        <div class="input-group">
-                           <div class="input-group-prepend">
-                              <span class="input-group-text bg-primary text-white" id="addon_1_price">Rp: </span>
-                           </div>
-                           <input type="text" id="addon_1_price" class="form-control" name="addon_1_price" inputmode="numeric" 
-                              value="{{ old('addon_1_price', $order->addons['addon_1']['price']) == 0 ? '' : $order->addons['addon_1']['price'] }}" 
-                              oninput="let value = this.value.replace(/[^\d.]/g, ''); //only numeric
-                                 this.value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); //format ribuan" 
-                           >
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="total_section row">
-               <div class="col-lg-12">
-                  <h5 class="text-dark h4 font-weight-bold">Grand Total :</h5>
+              <div class="mb-3" id="digital_invitation_section">
+                <h3 class="h5 font-weight-bold">Undangan Digital</h3>
+                <div class="form-group mb-3">
+                  <label for="digital_id">Tema Undangan</label>
+                  <select id="digital_id" name="digital_id" class="form-control">
+                      <option value="" disabled>Pilih Produk</option>
+                      @foreach ($product_digital_invitations as $digital)
+                        @if ($digital->id == $order->order_information['digital_invitation']['id'])
+                            <option value="{{ $digital->id }}" selected>{{ $digital->name }} | {{ $digital->product_package_name }}</option>
+                        @else
+                            <option value="{{ $digital->id }}">{{ $digital->name }} | {{ $digital->product_package_name }}</option>
+                        @endif
+                      @endforeach
+                  </select>
+                  <small>Katalog : <a target="_blank" href="https://kekkoinvitation.com/">Klik Disini</a></small>
+                </div>
+                <div class="form-group">
+                  <label for="digital_price" class="text-primary font-weight-bold">Harga</label>
                   <div class="input-group mb-3">
-                     <div class="input-group-prepend">
-                        <span class="input-group-text bg-primary text-white font-weight-bold" id="total_price">Rp</span>
-                     </div>
-                     <input type="text" id="total_price" class="form-control" value="" name="total_price" aria-label="total_price" aria-describedby="total_price" readonly>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-primary text-white" id="digital_price">Rp: </span>
+                      </div>
+                      <input type="text" id="digital_price" class="form-control" name="digital_price" 
+                        inputmode="numeric"
+                        value="{{ old('digital_price', $order->order_information['digital_invitation']['price']) == 0 ? '' : $order->order_information['digital_invitation']['price'] }}" 
+                        oninput="let value = this.value.replace(/[^\d.]/g, ''); 
+                            this.value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');"
+                      >
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
-         </div>
+            <div class="col-lg-3">
+              <h3 class="h5 font-weight-bold">Addons</h3>
+              <div class="form-group">
+                <label for="addon_1_name">Nama</label>
+                <textarea id="addon_1_name" class="form-control" rows="3" name="addon_1_name">{{ $order->addons['addon_1']['name'] }}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="addon_1_name">Harga</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-primary text-white" id="addon_1_price">Rp: </span>
+                    </div>
+                    <input type="text" id="addon_1_price" class="form-control" name="addon_1_price" inputmode="numeric" 
+                      value="{{ old('addon_1_price', $order->addons['addon_1']['price']) == 0 ? '' : $order->addons['addon_1']['price'] }}" 
+                      oninput="let value = this.value.replace(/[^\d.]/g, ''); //only numeric
+                          this.value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); //format ribuan" 
+                    >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="total_section row">
+            <div class="col-lg-12">
+              <h5 class="text-dark h4 font-weight-bold">Grand Total :</h5>
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text bg-primary text-white font-weight-bold" id="total_price">Rp</span>
+                  </div>
+                  <input type="text" id="total_price" class="form-control" value="" name="total_price" aria-label="total_price" aria-describedby="total_price" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="card shadow p-3 mb-3" id="data-pengantin">
@@ -435,8 +430,18 @@
                      </div>
                      <div class="col-lg-6">
                         <div class="form-group">
-                           <label for="akad_time_end">Waktu Selesai</label>
-                           <input type="time" id="akad_time_end" class="form-control" name="akad_time_end" value="{{ old('akad_time_end', $order->agenda_data['akad']['time_end']) }}">
+                          <label for="akad_time_end">Waktu Selesai</label>
+                          @if ($order->agenda_data['akad']['time_end'] == 'Selesai')
+                            <input type="time" id="akad_time_end" class="form-control" name="akad_time_end" value="{{ old('akad_time_end', $order->agenda_data['akad']['time_end']) }}" disabled>
+                            <div class="d-flex mt-3">
+                              <input type="checkbox" id="akad_time_end_selesai" value="Selesai" name="akad_time_end" style="width: 20px; height: 20px; margin-right: 10px;" checked> s.d. Selesai
+                            </div>
+                          @else
+                            <input type="time" id="akad_time_end" class="form-control" name="akad_time_end" value="{{ old('akad_time_end', $order->agenda_data['akad']['time_end']) }}">
+                            <div class="d-flex mt-3">
+                              <input type="checkbox" id="akad_time_end_selesai" value="" name="akad_time_end" style="width: 20px; height: 20px; margin-right: 10px;" checked> s.d. Selesai
+                            </div>
+                          @endif
                         </div>
                      </div>
                   </div>
@@ -476,7 +481,17 @@
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="resepsi_time_end">Waktu Selesai</label>
-                           <input type="time" id="resepsi_time_end" class="form-control" name="resepsi_time_end" value="{{ old('resepsi_time_end', $order->agenda_data['resepsi']['time_end']) }}">
+                           @if ($order->agenda_data['resepsi']['time_end'] == 'Selesai')
+                              <input type="time" id="resepsi_time_end" class="form-control" name="resepsi_time_end" value="{{ old('resepsi_time_end', $order->agenda_data['resepsi']['time_end']) }}" disabled>
+                              <div class="d-flex mt-3">
+                                <input type="checkbox" id="resepsi_time_end_selesai" value="Selesai" name="resepsi_time_end" style="width: 20px; height: 20px; margin-right: 10px;" checked> s.d. Selesai
+                              </div>
+                           @else
+                              <input type="time" id="resepsi_time_end" class="form-control" name="resepsi_time_end" value="{{ old('resepsi_time_end', $order->agenda_data['resepsi']['time_end']) }}">
+                              <div class="d-flex mt-3">
+                                <input type="checkbox" id="resepsi_time_end_selesai" value="" name="resepsi_time_end" style="width: 20px; height: 20px; margin-right: 10px;"> s.d. Selesai
+                              </div>
+                           @endif
                         </div>
                      </div>
                   </div>
@@ -516,7 +531,17 @@
                      <div class="col-lg-6">
                         <div class="form-group">
                            <label for="ngunduh_mantu_time_end">Waktu Selesai</label>
-                           <input type="time" id="ngunduh_mantu_time_end" class="form-control" name="ngunduh_mantu_time_end" value="{{ old('ngunduh_mantu_time_end', $order->agenda_data['ngunduh_mantu']['time_end']) }}">
+                           @if ($order->agenda_data['ngunduh_mantu']['time_end'] == 'Selesai')
+                            <input type="time" id="ngunduh_mantu_time_end" class="form-control" name="ngunduh_mantu_time_end" value="{{ old('ngunduh_mantu_time_end', $order->agenda_data['ngunduh_mantu']['time_end']) }}" disabled>
+                            <div class="d-flex mt-3">
+                              <input type="checkbox" id="ngunduh_mantu_time_end_selesai" value="Selesai" name="ngunduh_mantu_time_end" style="width: 20px; height: 20px; margin-right: 10px;" checked> s.d. Selesai
+                            </div>
+                          @else
+                            <input type="time" id="ngunduh_mantu_time_end" class="form-control" name="ngunduh_mantu_time_end" value="{{ old('ngunduh_mantu_time_end', $order->agenda_data['ngunduh_mantu']['time_end']) }}">
+                            <div class="d-flex mt-3">
+                              <input type="checkbox" id="ngunduh_mantu_time_end_selesai" value="" name="ngunduh_mantu_time_end" style="width: 20px; height: 20px; margin-right: 10px;"> s.d. Selesai
+                            </div>
+                          @endif
                         </div>
                      </div>
                   </div>
@@ -556,112 +581,146 @@
 @endsection
 
 @push('script')
-   <script>
-      function updateInvitationDisplay() {
-         const selectedValue = $('input[name="invitation_type"]:checked').val();
+  <script>
+    function updateInvitationDisplay() {
+      const selectedValue = $('input[name="invitation_type"]:checked').val();
+  
+      $('#digital_invitation_section, #printed_invitation_section').hide();
       
-         $('#digital_invitation_section, #printed_invitation_section').hide();
-         
-         if (selectedValue === 'digital_invitation') {
-            $('#digital_invitation_section').fadeIn(200);
-            $('#printed_invitation_section #printed_quantity').val('');
-            $('#printed_invitation_section #printed_price').val('');
-            calculateTotal();
-         }
-         else if (selectedValue === 'printed_invitation') {
-            $('#printed_invitation_section').fadeIn(200);
-            $('#digital_invitation_section #digital_quantity').val('');
-            $('#digital_invitation_section #digital_price').val('');
-            calculateTotal();
-         }
-         else if (selectedValue === 'printed_digital') {
-            $('#digital_invitation_section, #printed_invitation_section').fadeIn(200);
-            calculateTotal();
-         }
+      if (selectedValue === 'digital_invitation') {
+        $('#digital_invitation_section').fadeIn(200);
+        $('#printed_invitation_section #printed_quantity').val('');
+        $('#printed_invitation_section #printed_price').val('');
+        calculateTotal();
       }
-
-      // Fungsi untuk copy ke clipboard dengan animasi
-      function copyToClipboard(elementId) {
-         // Dapatkan elemen input/textarea berdasarkan ID
-         const inputElement = document.getElementById(elementId);
-         
-         // Copy value ke clipboard
-         navigator.clipboard.writeText(inputElement.value)
-            .then(() => {
-                  // Dapatkan tombol copy
-                  const copyButton = $(`button[id="${elementId}"]`);
-                  
-                  // Simpan teks asli
-                  const originalText = copyButton.text();
-                  const originalClass = copyButton.attr('class');
-                  
-                  // Ubah tampilan tombol
-                  copyButton.text('Text copied!')
-                     .removeClass(originalClass)
-                     .addClass('input-group-text bg-dark text-white')
-                     .css('transition', 'all 0.3s ease');
-                  
-                  // Kembalikan ke state semula setelah 3 detik
-                  setTimeout(() => {
-                     copyButton.text(originalText)
-                        .removeClass('bg-dark text-white')
-                        .addClass(originalClass);
-                  }, 2000);
-            })
-            .catch(err => {
-                  console.error('Gagal menyalin teks: ', err);
-            });
+      else if (selectedValue === 'printed_invitation') {
+        $('#printed_invitation_section').fadeIn(200);
+        $('#digital_invitation_section #digital_quantity').val('');
+        $('#digital_invitation_section #digital_price').val('');
+        calculateTotal();
       }
-
-
-      // Fungsi untuk memformat angka ke format mata uang
-      function formatNumber(num) {
-         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      else if (selectedValue === 'printed_digital') {
+        $('#digital_invitation_section, #printed_invitation_section').fadeIn(200);
+        calculateTotal();
       }
+    }
 
-      // Fungsi untuk menghapus format mata uang dan mengembalikan angka
-      function unformatNumber(str) {
-         return parseFloat(str.replace(/,/g, '')) || 0;
-      }
-
-      // Calculate Total Price
-      function calculateTotal() {
-         let digitalPrice = unformatNumber($('input[name="digital_price"]').val());
-         let printedPrice = unformatNumber($('input[name="printed_price"]').val());
-         let addonPrice = unformatNumber($('input[name="addon_1_price"]').val());
-
-         let total = digitalPrice + printedPrice + addonPrice;
-
-         $('input[name="total_price"]').val(formatNumber(total));
-      }
-
-      $(document).ready(function() {
-         // === UPDATE DISPLAY INVITATION
-         $('input[name="invitation_type"]').change(updateInvitationDisplay);
-         updateInvitationDisplay();
-
-         // === FUNGSI COPY TO CLIPBOARD
-         $('button[id]').on('click', function(e) {
-            e.preventDefault();
-            const elementId = $(this).attr('id');
-            copyToClipboard(elementId);
-         });
-
-         // === CALCULATE TOTAL PRICE ===
-         $('input[name="digital_price"], input[name="printed_price"], input[name="addon_1_price"]').on('input', function() {
-            let value = $(this).val();
-            let unformatted = unformatNumber(value);
-            $(this).val(formatNumber(unformatted));
-            
-            calculateTotal();
-         });
-
-         calculateTotal();
-
-         // Formating Created At
-         const created_at = new Date('{{ $order->order_date ?? $order->created_at }}');
-         const formatted_date = created_at.toISOString().split('T')[0];
-         $('#order_date').val(formatted_date);
+    // Fungsi untuk copy ke clipboard dengan animasi
+    function copyToClipboard(elementId) {
+      // Dapatkan elemen input/textarea berdasarkan ID
+      const inputElement = document.getElementById(elementId);
+      
+      // Copy value ke clipboard
+      navigator.clipboard.writeText(inputElement.value)
+      .then(() => {
+        // Dapatkan tombol copy
+        const copyButton = $(`button[id="${elementId}"]`);
+        
+        // Simpan teks asli
+        const originalText = copyButton.text();
+        const originalClass = copyButton.attr('class');
+        
+        // Ubah tampilan tombol
+        copyButton.text('Text copied!')
+            .removeClass(originalClass)
+            .addClass('input-group-text bg-dark text-white')
+            .css('transition', 'all 0.3s ease');
+        
+        // Kembalikan ke state semula setelah 3 detik
+        setTimeout(() => {
+            copyButton.text(originalText)
+              .removeClass('bg-dark text-white')
+              .addClass(originalClass);
+        }, 2000);
+      })
+      .catch(err => {
+        console.error('Gagal menyalin teks: ', err);
       });
-   </script>
+    }
+
+
+    // Fungsi untuk memformat angka ke format mata uang
+    function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    // Fungsi untuk menghapus format mata uang dan mengembalikan angka
+    function unformatNumber(str) {
+      return parseFloat(str.replace(/,/g, '')) || 0;
+    }
+
+    // Calculate Total Price
+    function calculateTotal() {
+      let digitalPrice = unformatNumber($('input[name="digital_price"]').val());
+      let printedPrice = unformatNumber($('input[name="printed_price"]').val());
+      let addonPrice = unformatNumber($('input[name="addon_1_price"]').val());
+
+      let total = digitalPrice + printedPrice + addonPrice;
+
+      $('input[name="total_price"]').val(formatNumber(total));
+    }
+
+    $(document).ready(function() {
+      // === UPDATE DISPLAY INVITATION
+      $('input[name="invitation_type"]').change(updateInvitationDisplay);
+      updateInvitationDisplay();
+
+      // === FUNGSI COPY TO CLIPBOARD
+      $('button[id]').on('click', function(e) {
+        e.preventDefault();
+        const elementId = $(this).attr('id');
+        copyToClipboard(elementId);
+      });
+
+      // === CALCULATE TOTAL PRICE ===
+      $('input[name="digital_price"], input[name="printed_price"], input[name="addon_1_price"]').on('input', function() {
+        let value = $(this).val();
+        let unformatted = unformatNumber(value);
+        $(this).val(formatNumber(unformatted));
+        
+        calculateTotal();
+      });
+
+      calculateTotal();
+
+      // Formating Created At
+      const created_at = new Date('{{ $order->order_date ?? $order->created_at }}');
+      const formatted_date = created_at.toISOString().split('T')[0];
+      $('#order_date').val(formatted_date);
+
+      // === HANDLE CHECKBOX TIME END ===
+      // AKAD
+      $('#akad_time_end_selesai').change(function() {
+        if($(this).is(':checked')) {
+          $('#akad_time_end').prop('disabled', true);
+          $('#akad_time_end_selesai').value = 'Selesai';
+        }
+        else {
+          $('#akad_time_end').prop('disabled', false);
+        }
+      });
+
+      // RESEPSI
+      $('#resepsi_time_end_selesai').change(function() {
+        if($(this).is(':checked')) {
+          $('#resepsi_time_end').prop('disabled', true);
+          $('#resepsi_time_end_selesai').value = 'Selesai';
+        }
+        else {
+          $('#resepsi_time_end').prop('disabled', false);
+        }
+      });
+
+      // NGUNDUH MANTU
+      $('#ngunduh_mantu_time_end_selesai').change(function() {
+        if($(this).is(':checked')) {
+          $('#ngunduh_mantu_time_end').prop('disabled', true);
+          $('#ngunduh_mantu_time_end_selesai').value = 'Selesai';
+        }
+        else {
+          $('#ngunduh_mantu_time_end').prop('disabled', false);
+        }
+      });
+    });
+  </script>
 @endpush

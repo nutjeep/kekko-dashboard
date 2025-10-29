@@ -9,55 +9,59 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-   use SoftDeletes, FormattedDate;
+  use SoftDeletes, FormattedDate;
 
-   protected $guarded = [
-      'id', 'created_at', 'updated_at', 'deleted_at'
-   ];
+  protected $guarded = [
+    'id', 'created_at', 'updated_at', 'deleted_at'
+  ];
 
-   protected static function boot()
-   {
-      parent::boot();
+  protected $hidden = [
+    'created_at', 'updated_at', 'deleted_at'
+  ];
 
-      static::created(function ($model) {
-         $count = $model
-                  ->where('type', $model->type)
-                  ->count();
-         
-         $sequence = str_pad($count, 4, '0', STR_PAD_LEFT);
-         
-         if ($model->type == 'digital') {
-            $model->sku = 'KEKKO-PRD-DIG-' . $sequence;
-         } 
-         else if ($model->type == 'printed') {
-            $model->sku = 'KEKKO-PRD-PRT-' . $sequence;
-         }
+  protected static function boot()
+  {
+    parent::boot();
 
-         // SLUG
-         $theme_slug = Str::slug($model->name . '-' . $sequence);
-         $model->slug = $theme_slug;
-         
-         $model->save();
-      });
-   }
+    static::created(function ($model) {
+      $count = $model
+              ->where('type', $model->type)
+              ->count();
+      
+      $sequence = str_pad($count, 4, '0', STR_PAD_LEFT);
+      
+      if ($model->type == 'digital') {
+        $model->sku = 'KEKKO-PRD-DIG-' . $sequence;
+      } 
+      else if ($model->type == 'printed') {
+        $model->sku = 'KEKKO-PRD-PRT-' . $sequence;
+      }
 
-   public function theme()
-   {
-      return $this->belongsTo(ProductTheme::class);
-   }
+      // SLUG
+      $theme_slug = Str::slug($model->name . '-' . $sequence);
+      $model->slug = $theme_slug;
+      
+      $model->save();
+    });
+  }
 
-   public function package()
-   {
-      return $this->belongsTo(ProductPackage::class);
-   }
+  public function theme()
+  {
+    return $this->belongsTo(ProductTheme::class);
+  }
 
-   public function getProductThemeNameAttribute()
-   {
-      return $this->theme->name ?? '-';
-   }
+  public function package()
+  {
+    return $this->belongsTo(ProductPackage::class);
+  }
 
-   public function getProductPackageNameAttribute()
-   {
-      return $this->package->name ?? '-';
-   }
+  public function getProductThemeNameAttribute()
+  {
+    return $this->theme->name ?? '-';
+  }
+
+  public function getProductPackageNameAttribute()
+  {
+    return $this->package->name ?? '-';
+  }
 }

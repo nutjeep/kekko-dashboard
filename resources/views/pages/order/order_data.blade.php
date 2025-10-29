@@ -1,94 +1,94 @@
 @extends('layouts.app_fe')
 
 @push('style')
-   <style>
-      hr {
-         background-color: rgba(0, 0, 0, 0.3);
-         height: .2px;
-         margin-top: 20px;
-         margin-bottom: 20px;
-      }
+  <style>
+    hr {
+      background-color: rgba(0, 0, 0, 0.3);
+      height: .2px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
 
-      h2 {
-         font-weight: 600;
-         font-size: 24px;
-      }
+    h2 {
+      font-weight: 600;
+      font-size: 24px;
+    }
 
-      label {
-         margin-bottom: 4px;
-      }
+    label {
+      margin-bottom: 4px;
+    }
 
-      .add-ngunduh-mantu {
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         gap: 10px;
-         font-weight: 700;
-         color: red;
-      }
+    .add-ngunduh-mantu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: red;
+    }
 
-      .agenda {
-         display: flex;
-         flex-wrap: wrap;
-         justify-content: center;
-         align-items: center;
-         width: 100%;
-      }
+    .agenda {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
 
+    .agenda .agenda-item {
+      padding: 10px;
+      width: 33%;
+      text-align: center;
+      border: .8px solid rgb(231, 231, 231);
+      color: rgb(146, 146, 146);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .agenda-item-1:hover {
+      background-color: #c6e1ff;
+      color: #003875;
+    }
+
+    .agenda-item-2:hover {
+      background-color: #deffe5;
+      color: #026218;
+    }
+
+    .agenda-item-3:hover {
+      background-color: #fff7df;
+      color: #a07800;
+    }
+
+    .agenda .agenda-item.active {
+      font-weight: bold;
+    }
+
+    .agenda-item-1.active {
+      background-color: #7dbcff !important;
+      color: #003875 !important;
+    }
+
+    .agenda-item-2.active {
+      background-color: #6fd286 !important;
+      color: #026218 !important;
+    }
+
+    .agenda-item-3.active {
+      background-color: #ffe699 !important;
+      color: #a07800 !important;
+    }
+
+    .btn-submit {
+      width: 50%;
+    }
+
+    @media screen and (max-width: 576px) {
       .agenda .agenda-item {
-         padding: 10px;
-         width: 33%;
-         text-align: center;
-         border: .8px solid rgb(231, 231, 231);
-         color: rgb(146, 146, 146);
-         cursor: pointer;
-         transition: all 0.3s ease;
+      width: 100% !important;
       }
-
-      .agenda-item-1:hover {
-         background-color: #c6e1ff;
-         color: #003875;
-      }
-
-      .agenda-item-2:hover {
-         background-color: #deffe5;
-         color: #026218;
-      }
-
-      .agenda-item-3:hover {
-         background-color: #fff7df;
-         color: #a07800;
-      }
-
-      .agenda .agenda-item.active {
-         font-weight: bold;
-      }
-
-      .agenda-item-1.active {
-         background-color: #7dbcff !important;
-         color: #003875 !important;
-      }
-
-      .agenda-item-2.active {
-         background-color: #6fd286 !important;
-         color: #026218 !important;
-      }
-
-      .agenda-item-3.active {
-         background-color: #ffe699 !important;
-         color: #a07800 !important;
-      }
-
-      .btn-submit {
-         width: 50%;
-      }
-
-      @media screen and (max-width: 576px) {
-         .agenda .agenda-item {
-         width: 100% !important;
-         }
-      }
-   </style>
+    }
+  </style>
 @endpush
 
 @section('content')
@@ -343,7 +343,9 @@
                         <div class="form-group">
                            <label for="akad_time_end">Waktu Selesai</label>
                            <input type="time" id="akad_time_end" class="form-control" name="akad_time_end">
-                           <small><strong>* Kosongkan apabila tidak ada waktu selesai</strong></small>
+                           <div class="d-flex mt-3">
+                              <input type="checkbox" id="akad_time_end_selesai" value="" name="akad_time_end" style="width: 20px; height: 20px; margin-right: 10px;"> s.d. Selesai
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -376,7 +378,9 @@
                         <div class="form-group">
                            <label for="resepsi_time_end">Waktu Selesai</label>
                            <input type="time" id="resepsi_time_end" class="form-control" name="resepsi_time_end">
-                           <small><strong>* Kosongkan apabila tidak ada waktu selesai</strong></small>
+                           <div class="d-flex mt-3">
+                              <input type="checkbox" id="resepsi_time_end_selesai" value="" name="resepsi_time_end" style="width: 20px; height: 20px; margin-right: 10px;"> s.d. Selesai
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -409,7 +413,9 @@
                         <div class="form-group">
                            <label for="ngunduh_mantu_time_end">Waktu Selesai</label>
                            <input type="time" id="ngunduh_mantu_time_end" class="form-control" name="ngunduh_mantu_time_end">
-                           <small><strong>* Kosongkan apabila tidak ada waktu selesai</strong></small>
+                           <div class="d-flex mt-3">
+                              <input type="checkbox" id="ngunduh_mantu_time_end_selesai" value="" name="ngunduh_mantu_time_end" style="width: 20px; height: 20px; margin-right: 10px;"> s.d. Selesai
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -433,152 +439,176 @@
 
 @push('script')
 <script>
-   function updateAgendaItemStyle(item) {
-      var $item = $(item);
-      
-      // Reset semua style ke default
-      $item.css({
-         'background-color': '',
-         'color': $item.hasClass('agenda-item-1') ? '#003875' : 
-                  $item.hasClass('agenda-item-2') ? '#026218' : '#a07800'
-      });
-
-      // Jika active, terapkan style yang lebih gelap
-      if ($item.hasClass('active')) {
-         var bgColor = $item.hasClass('agenda-item-1') ? '#7dbcff' : 
-                     $item.hasClass('agenda-item-2') ? '#6fd286' : '#ffe699';
-         
-         $item.css({
-         'background-color': bgColor,
-         'color': $item.hasClass('agenda-item-1') ? '#003875' : 
-                  $item.hasClass('agenda-item-2') ? '#026218' : '#a07800'
-         });
-      }
-   }
-
-   function handleNameOrderChange() {
-      // if ($('#first_come_groom').is(':checked')) {
-      //    // Jika mempelai pria yang dipilih dahulu
-      //    $('.data-pengantin').prepend($('.groom'));
-      //    $('.data-pengantin').append($('.bride'));
-      // } else {
-      //    // Jika mempelai wanita yang dipilih dahulu
-      //    $('.data-pengantin').prepend($('.bride'));
-      //    $('.data-pengantin').append($('.groom'));
-      // }
-
-      $('.groom, .bride').fadeOut(200, function () {
-        if ($('#first_come_groom').is(':checked')) {
-            $('.groom').prependTo('.data-pengantin').fadeIn(200); // menyisipkan elemen groom di awal elemen .data-pengantin
-            $('.bride').appendTo('.data-pengantin').fadeIn(200); // menyisipkan elemen bride di akhir elemen .data-pengantin
-        } else {
-            $('.bride').prependTo('.data-pengantin').fadeIn(200);
-            $('.groom').appendTo('.data-pengantin').fadeIn(200);
-        }
+  function updateAgendaItemStyle(item) {
+    var $item = $(item);
+    
+    // Reset semua style ke default
+    $item.css({
+      'background-color': '',
+      'color': $item.hasClass('agenda-item-1') ? '#003875' : 
+                $item.hasClass('agenda-item-2') ? '#026218' : '#a07800'
     });
-   }
 
-   function updateInvitationDisplay() {
-      const selectedValue = $('input[name="invitation_type"]:checked').val();
-      
-      $('#digital_invitation_section, #printed_invitation_section').hide();
-      
-      if (selectedValue === 'digital_invitation') {
-         $('#digital_invitation_section').fadeIn(200);
-      }
-      else if (selectedValue === 'printed_invitation') {
-         $('#printed_invitation_section').fadeIn(200);
-      }
-      else if (selectedValue === 'printed_digital') {
-         $('#digital_invitation_section, #printed_invitation_section').fadeIn(200);
-      }
-   }
+    // Jika active, terapkan style yang lebih gelap
+    if ($item.hasClass('active')) {
+        var bgColor = $item.hasClass('agenda-item-1') ? '#7dbcff' : 
+                      $item.hasClass('agenda-item-2') ? '#6fd286' : '#ffe699';
+        
+        $item.css({
+        'background-color': bgColor,
+        'color': $item.hasClass('agenda-item-1') ? '#003875' : 
+                  $item.hasClass('agenda-item-2') ? '#026218' : '#a07800'
+        });
+    }
+  }
 
-   $(document).ready(function() {
-      // == PENGATURAN SEKSI PENDAHULUAN SEKSI GROOM/BRIDE ==
+  function handleNameOrderChange() {
+    $('.groom, .bride').fadeOut(200, function () {
+      if ($('#first_come_groom').is(':checked')) {
+        $('.groom').prependTo('.data-pengantin').fadeIn(200); // menyisipkan elemen groom di awal elemen .data-pengantin
+        $('.bride').appendTo('.data-pengantin').fadeIn(200); // menyisipkan elemen bride di akhir elemen .data-pengantin
+      } else {
+        $('.bride').prependTo('.data-pengantin').fadeIn(200);
+        $('.groom').appendTo('.data-pengantin').fadeIn(200);
+      }
+  });
+  }
+
+  function updateInvitationDisplay() {
+    const selectedValue = $('input[name="invitation_type"]:checked').val();
+    
+    $('#digital_invitation_section, #printed_invitation_section').hide();
+    
+    if (selectedValue === 'digital_invitation') {
+      $('#digital_invitation_section').fadeIn(200);
+    }
+    else if (selectedValue === 'printed_invitation') {
+      $('#printed_invitation_section').fadeIn(200);
+    }
+    else if (selectedValue === 'printed_digital') {
+      $('#digital_invitation_section, #printed_invitation_section').fadeIn(200);
+    }
+  }
+
+  $(document).ready(function() {
+    // == PENGATURAN SEKSI PENDAHULUAN SEKSI GROOM/BRIDE ==
+    handleNameOrderChange();
+
+    $('input[name="first_come"]').change(function() {
       handleNameOrderChange();
-
-      $('input[name="first_come"]').change(function() {
-         handleNameOrderChange();
-      });
+    });
+    
+    // == MENAMPILKAN / MENYEMBUNYIKAN SEKSI AGENDA ==
+    $('.akad_section, .resepsi_section, .ngunduh_mantu_section').hide();
+    $('.agenda-item').click(function() {
+      // Toggle class active pada item yang diklik
+      $(this).toggleClass('active');
       
-      // == MENAMPILKAN / MENYEMBUNYIKAN SEKSI AGENDA ==
-      $('.akad_section, .resepsi_section, .ngunduh_mantu_section').hide();
-      $('.agenda-item').click(function() {
-         // Toggle class active pada item yang diklik
-         $(this).toggleClass('active');
-         
-         let agendaType = $(this).hasClass('akad') ? 'akad' : 
-            $(this).hasClass('resepsi') ? 'resepsi' : 'ngunduh_mantu';
+      let agendaType = $(this).hasClass('akad') ? 'akad' : 
+        $(this).hasClass('resepsi') ? 'resepsi' : 'ngunduh_mantu';
 
-         // Tampilkan section yang sesuai
-         $('.' + agendaType + '_section').toggle();
+      // Tampilkan section yang sesuai
+      $('.' + agendaType + '_section').toggle();
 
-         // Update styling berdasarkan active state
-         updateAgendaItemStyle(this);
+      // Update styling berdasarkan active state
+      updateAgendaItemStyle(this);
 
-         $('<style>')
-            .text(`
-            .agenda-item.active {
-               font-weight: bold;
-            }
-            .agenda-item-1.active {
-               background-color: #7dbcff !important;
-               color: #003875 !important;
-            }
-            .agenda-item-2.active {
-               background-color: #6fd286 !important;
-               color: #026218 !important;
-            }
-            .agenda-item-3.active {
-               background-color: #ffe699 !important;
-               color: #a07800 !important;
-            }
-            `)
-            .appendTo('head');
-      });
+      $('<style>')
+        .text(`
+          .agenda-item.active {
+              font-weight: bold;
+          }
+          .agenda-item-1.active {
+              background-color: #7dbcff !important;
+              color: #003875 !important;
+          }
+          .agenda-item-2.active {
+              background-color: #6fd286 !important;
+              color: #026218 !important;
+          }
+          .agenda-item-3.active {
+              background-color: #ffe699 !important;
+              color: #a07800 !important;
+          }
+      `)
+      .appendTo('head');
+    });
 
-      // === UPDATE DISPLAY INVITATION
-      $('input[name="invitation_type"]').change(updateInvitationDisplay);
-      updateInvitationDisplay();
+    // === UPDATE DISPLAY INVITATION
+    $('input[name="invitation_type"]').change(updateInvitationDisplay);
+    updateInvitationDisplay();
 
-      // -- VALIDASI FORM TIPE UNDANGAN
-      document.querySelector('form').addEventListener('submit', function(e) {
-         const selected_type = $('input[name="invitation_type"]:checked').value;
-         const digital_theme = $('#digital_theme').value;
-         const printed_type = $('#printed_name').value;
-         
-         if (selected_type.includes('digital') && !digital_theme) {
-            e.preventDefault();
-            alert('Silakan pilih tema undangan digital');
-         }
-         
-         if (selected_type.includes('printed') && !printed_type) {
-            e.preventDefault();
-            alert('Silakan isi tipe undangan cetak');
-         }
-      });
-
-      // === Fungsi untuk mengupdate digital_name saat select berubah ===
-      $('#digital_id').on('change', function() {
-         // Ambil teks dari option yang dipilih
-         const selected_text = $(this).find('option:selected').text();
-         
-         // Set nilai input hidden digital_name
-         $('input[name="digital_name"]').val(selected_text);
-      });
-
-      // Jalankan juga saat halaman pertama kali dimuat (jika ada nilai yang sudah terpilih)
-      if ($('#digital_id').val()) {
-         const initial_text = $('#digital_id').find('option:selected').text();
-         $('input[name="digital_name"]').val(initial_text);
+    // -- VALIDASI FORM TIPE UNDANGAN
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const selected_type = $('input[name="invitation_type"]:checked').value;
+      const digital_theme = $('#digital_theme').value;
+      const printed_type = $('#printed_name').value;
+      
+      if (selected_type.includes('digital') && !digital_theme) {
+        e.preventDefault();
+        alert('Silakan pilih tema undangan digital');
       }
-   
-      // === CLOSE ALERT
-      $('.btn-close-alert').click(function() {
-         $(this).closest('.alert').fadeOut(200);
-      });
-   });
+      
+      if (selected_type.includes('printed') && !printed_type) {
+        e.preventDefault();
+        alert('Silakan isi tipe undangan cetak');
+      }
+    });
+
+    // === Fungsi untuk mengupdate digital_name saat select berubah ===
+    $('#digital_id').on('change', function() {
+      // Ambil teks dari option yang dipilih
+      const selected_text = $(this).find('option:selected').text();
+      
+      // Set nilai input hidden digital_name
+      $('input[name="digital_name"]').val(selected_text);
+    });
+
+    // Jalankan juga saat halaman pertama kali dimuat (jika ada nilai yang sudah terpilih)
+    if ($('#digital_id').val()) {
+      const initial_text = $('#digital_id').find('option:selected').text();
+      $('input[name="digital_name"]').val(initial_text);
+    }
+  
+    // === CLOSE ALERT
+    $('.btn-close-alert').click(function() {
+      $(this).closest('.alert').fadeOut(200);
+    });
+
+    // === CEKLIST SELESAI UNTUK WAKTU SELESAI
+    // AKAD
+    $('#akad_time_end_selesai').change(function() {
+      if($(this).is(':checked')) {
+        $('#akad_time_end').prop('disabled', true);
+        $('#akad_time_end_selesai').value = 'Selesai';
+      }
+      else {
+        $('#akad_time_end').prop('disabled', false);
+      }
+    });
+
+    // RESEPSI
+    $('#resepsi_time_end_selesai').change(function() {
+      if($(this).is(':checked')) {
+        $('#resepsi_time_end').prop('disabled', true);
+        $('#resepsi_time_end_selesai').value = 'Selesai';
+      }
+      else {
+        $('#resepsi_time_end').prop('disabled', false);
+      }
+    });
+
+    // NGUNDUH MANTU
+    $('#ngunduh_mantu_time_end_selesai').change(function() {
+      if($(this).is(':checked')) {
+        $('#ngunduh_mantu_time_end').prop('disabled', true);
+        $('#ngunduh_mantu_time_end_selesai').value = 'Selesai';
+      }
+      else {
+        $('#ngunduh_mantu_time_end').prop('disabled', false);
+      }
+    });
+  });
 </script>
   
 @endpush
