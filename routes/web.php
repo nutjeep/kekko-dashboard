@@ -7,8 +7,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ProductThemeController;
 use App\Http\Controllers\ProductPackageController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+
+Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+Route::put('profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::get('order', [OrderController::class, 'index'])->name('order');
 Route::get('order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');

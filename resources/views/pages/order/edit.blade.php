@@ -24,12 +24,12 @@
    @if ($errors->any())
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
          <ul class="mb-0">
-               @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-               @endforeach
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
          </ul>
          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
          </button>
       </div>
    @endif
@@ -570,10 +570,10 @@
                   <i class="fas fa-sync-alt mr-1"></i>
                   <strong>Update Data</strong>
                </button>
-               <button type="submit" name="action" value="update_and_transaction" class="btn-update-n-trx btn btn-primary px-4">
+               {{-- <button type="submit" name="action" value="update_and_transaction" class="btn-update-n-trx btn btn-primary px-4">
                   <strong>Update & Buat Transaksi</strong>
                   <i class="fas fa-chevron-right ml-1"></i>
-               </button>
+               </button> --}}
             </div>
          </div>
       </div>

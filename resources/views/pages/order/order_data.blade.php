@@ -277,7 +277,7 @@
                   </div>
                   <div class="form-group mb-3">
                      <label for="bride_phone">No. Whatsapp</label>
-                     <input class="form-control" id="bride_phone" name="bride_phone" placeholder="Cth: 08123456789" inputmode="numeric"  oninput="this.value = this.value.replace(/[^\d.]/g, '')">
+                     <input class="form-control" id="bride_phone" name="bride_phone" placeholder="Cth: 08123456789" inputmode="numeric" oninput="this.value = this.value.replace(/[^\d.]/g, '')">
                   </div>
                   <div class="mb-3">
                      <label for="bride_instagram">Akun Instagram</label>
