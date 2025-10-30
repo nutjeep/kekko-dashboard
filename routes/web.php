@@ -13,6 +13,8 @@ Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 
 Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::put('profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('profile/change-password', [ProfileController::class, 'password'])->name('profile.password');
+Route::put('profile/change-password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
 Route::get('order', [OrderController::class, 'index'])->name('order');
 Route::get('order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
