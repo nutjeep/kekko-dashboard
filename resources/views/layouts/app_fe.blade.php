@@ -15,7 +15,7 @@
       }
    </style>
    @stack('style')
-   <title>Kekko | Data Pesanan</title>
+   <title>Kekko</title>
 </head>
 <body>
    <main class="container py-3">
