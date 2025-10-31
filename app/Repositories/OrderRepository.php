@@ -26,7 +26,7 @@ class OrderRepository extends BaseRepository
    public function getEmployees()
    {
       return User::where('role_id', 2)
-        ->select('id', 'name', 'nickname')
+        ->select('id', 'name', 'username')
         ->get();
    }
 

@@ -39,10 +39,10 @@
         </div>
         <div class="row mb-3">
           <div class="col-2">
-            Nickname
+            Username
           </div>
           <div class="col-4">
-            <input type="text" class="form-control" name="nickname" value="{{ $profile->nickname ?? '' }}">
+            <input type="text" class="form-control" name="username" value="{{ $profile->username ?? '' }}">
           </div>
         </div>
         <div class="row mb-3">

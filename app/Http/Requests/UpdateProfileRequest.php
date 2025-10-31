@@ -23,7 +23,7 @@ class UpdateProfileRequest extends FormRequest
   {
     return [
       'name' => 'string|max:255',
-      'nickname' => 'string|max:255',
+      'username' => 'string|max:255',
       'email' => 'string|unique:users,email',
       'phone' => 'nullable'
     ];

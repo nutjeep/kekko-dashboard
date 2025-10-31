@@ -11,14 +11,14 @@ class UserSeeder extends Seeder
   protected array $users = [
     [
         'name' => 'Kekko',
-        'nickname' => 'kekko',
+        'username' => 'kekko',
         'email' => 'admin@kekkoinvitation.com',
         'phone' => '085730739878',
         'password' => 'password',
     ],
     [
         'name' => 'M Najib Abdulloh',
-        'nickname' => 'najib',
+        'username' => 'najib',
         'email' => 'najib@kekkoinvitation.com',
         'phone' => '083850296250',
         'password' => 'password',
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
 
         User::create([
           'name' => $user['name'],
-          'nickname' => $user['nickname'],
+          'username' => $user['username'],
           'email' => $user['email'],
           'phone' => $user['phone'],
           'password' => Hash::make($user['password']),
