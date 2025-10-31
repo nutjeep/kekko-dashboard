@@ -104,7 +104,13 @@
                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                <div class="modal-footer">
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                  <a class="btn btn-primary" href="login.html">Logout</a>
+                  <button type="button" id="confirmLogout" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt mr-1"></i>
+                    <span class="btn-text">Ya, Logout</span>
+                    <div class="spinner-border spinner-border-sm d-none" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
                </div>
          </div>
       </div>
@@ -122,21 +128,70 @@
 
    @stack('script')
 
-   <script>
-      $(document).ready(function() {
-         // Temukan semua elemen input yang memiliki atribut required
-         $('input[required], select[required], textarea[required]').each(function() {
-            // Dapatkan id dari elemen input
-            var inputId = $(this).attr('id');
-            
-            // Temukan label yang memiliki atribut for yang sesuai dengan id input
-            $('label[for="' + inputId + '"]').each(function() {
-            // Tambahkan span dengan tanda bintang setelah teks label
-            $(this).append('<span class="text-danger"> *</span>');
-            });
-         });
+  <script>
+    $(document).ready(function() {
+      // Temukan semua elemen input yang memiliki atribut required
+      $('input[required], select[required], textarea[required]').each(function() {
+        // Dapatkan id dari elemen input
+        var inputId = $(this).attr('id');
+        
+        // Temukan label yang memiliki atribut for yang sesuai dengan id input
+        $('label[for="' + inputId + '"]').each(function() {
+        // Tambahkan span dengan tanda bintang setelah teks label
+        $(this).append('<span class="text-danger"> *</span>');
+        });
       });
-   </script>
+
+      // === LOGOUT ===
+      $('#confirmLogout').on('click', function() {
+        const $button = $(this);
+        const $buttonText = $button.find('.btn-text');
+        const $spinner = $button.find('.spinner-border');
+        
+        // Show loading state
+        $button.prop('disabled', true);
+        $buttonText.addClass('d-none');
+        $spinner.removeClass('d-none');
+        
+        // AJAX logout
+        $.ajax({
+          url: '{{ route("logout") }}',
+          method: 'POST',
+          data: {
+              _token: '{{ csrf_token() }}'
+          },
+          success: function(response) {
+            if (response.success) {
+              // Show success message
+              showToast('success', response.message);
+              
+              // Redirect after short delay
+              setTimeout(() => {
+                  window.location.href = response.redirect;
+              }, 1000);
+            }
+          },
+          error: function(xhr) {
+              // Show error message
+              showToast('error', 'Terjadi kesalahan saat logout');
+              
+              // Reset button state
+              $button.prop('disabled', false);
+              $buttonText.removeClass('d-none');
+              $spinner.addClass('d-none');
+              
+              // Close modal
+              $('#logoutModal').modal('hide');
+          }
+        });
+      });
+    
+      function showToast(type, message) {
+        // Anda bisa menggunakan toast library atau custom implementation
+        alert(message); // Simple alert untuk demo
+      }
+    });
+  </script>
     
 </body>
 

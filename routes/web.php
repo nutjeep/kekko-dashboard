@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -9,15 +10,24 @@ use App\Http\Controllers\ProductThemeController;
 use App\Http\Controllers\ProductPackageController;
 use App\Http\Controllers\ProfileController;
 
-// Route::middleware('auth')->group(function() {
+Route::get('/', function(){
+  $title = 'Welcome to Kekko';
+  return view('welcome', compact('title'));
+});
+
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('login', [AuthController::class, 'loginAction'])->name('login.action');
+
+Route::middleware('auth')->group(function() {
   Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
   Route::get('profile', [ProfileController::class, 'index'])->name('profile');
   Route::put('profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
   Route::get('profile/change-password', [ProfileController::class, 'password'])->name('profile.password');
   Route::put('profile/change-password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+  Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-  // Route::middleware('superadmin')->group(function() {
+  Route::middleware('superadmin')->group(function() {
     Route::get('order', [OrderController::class, 'index'])->name('order');
     Route::get('order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
     Route::get('order/get_by_id/{id}', [OrderController::class, 'getOrderById'])->name('order.get_by_id');
@@ -43,5 +53,5 @@ use App\Http\Controllers\ProfileController;
 
     Route::get('data-pesanan', [OrderController::class, 'orderData'])->name('order_data');
     Route::post('data-pesanan/send', [OrderController::class, 'sendOrderData'])->name('send.order_data');
-  // });
-// });
+  });
+});

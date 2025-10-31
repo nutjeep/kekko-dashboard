@@ -22,9 +22,8 @@ class ProfileController extends Controller
 
   public function index ()
   {
-    // $user = Auth::user();
-    // $profile = $this->profile->getProfile($user->id);
-    $profile = User::where('id', 2)->first();
+    $user = Auth::user();
+    $profile = $this->profile->getProfile($user->id);
 
     return view('pages.profile.index', compact('profile'));
   }

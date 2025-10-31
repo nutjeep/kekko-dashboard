@@ -15,7 +15,7 @@
       }
    </style>
    @stack('style')
-   <title>Kekko</title>
+   <title>Kekko | {{ $title ?? '' }}</title>
 </head>
 <body>
    <main class="container py-3">
