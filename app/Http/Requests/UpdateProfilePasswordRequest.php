@@ -48,7 +48,19 @@ class UpdateProfilePasswordRequest extends FormRequest
   {
     return [
       'current_password.required' => 'Password wajib diisi',
-      'new_password.min' => 'Password minimal 8 karakter'
+      'new_password.min' => 'Password minimal 8 karakter',
+      'new_password.confirmed' => 'Konfirmasi password tidak sesuai',
+      'new_password.different' => 'Password baru harus berbeda dengan password lama',
+      'new_password_confirmation.required' => 'Konfirmasi password baru wajib diisi',
+    ];
+  }
+
+  public function attributes(): array
+  {
+    return [
+      'current_password' => 'password saat ini',
+      'new_password' => 'password baru',
+      'new_password_confirmation' => 'konfirmasi password baru'
     ];
   }
 }

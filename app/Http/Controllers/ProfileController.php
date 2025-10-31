@@ -22,8 +22,7 @@ class ProfileController extends Controller
 
   public function index ()
   {
-    $user = Auth::user();
-    $profile = $this->profile->getProfile($user->id);
+    $profile = Auth::user();
 
     return view('pages.profile.index', compact('profile'));
   }
@@ -54,19 +53,19 @@ class ProfileController extends Controller
     return view('pages.profile.change_password.index', compact('profile'));
   }
 
-  public function updatePassword (UpdateProfilePasswordRequest $request, $id)
+  public function updatePassword (UpdateProfilePasswordRequest $request)
   {
     try {
       DB::beginTransaction();
 
       $validatedData = $request->validated();
-      $this->profile->update($id, $validatedData);
+      $userId = Auth::id();
+      $this->profile->updatePassword($userId, $validatedData['new_password']);
 
       DB::commit();
       return redirect()->back()->with('success', 'Berhasil update password');
     }
-    catch (ValidationException $e)
-    {
+    catch (ValidationException $e) {
       DB::rollBack();
       Log::error("Error Update Password: " . $e->validator->errors());
       return back()->withErrors($e->validator)->withInput();
