@@ -21,15 +21,12 @@ return new class extends Migration
          $table->string('thumbnail')->nullable();
          $table->integer('quantity')->nullable();
          $table->integer('price')->nullable();
-         $table->integer('theme_id')->nullable();
-         $table->integer('package_id')->nullable();
+         $table->foreignId('theme_id')->nullable()->constrained('product_themes')->cascadeOnDelete();
+         $table->foreignId('package_id')->nullable()->constrained('product_packages')->cascadeOnDelete();
          $table->string('type')->nullable()->comment('digital | printed');
          $table->boolean('is_active')->default(true)->nullable();
          $table->timestamps();
          $table->softDeletes();
-
-         $table->foreign('theme_id')->references('id')->on('product_themes');
-         $table->foreign('package_id')->references('id')->on('product_packages');
       });
    }
 
