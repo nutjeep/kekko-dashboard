@@ -20,11 +20,9 @@ return new class extends Migration
             $table->string('dp_amount')->nullable();
             $table->string('total_amount')->nullable();
             $table->string('notes')->nullable();
-            $table->integer('order_id')->nullable();
+            $table->foreignId('order_id')->nullable()->constrained('orders')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
