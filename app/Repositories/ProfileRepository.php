@@ -12,14 +12,6 @@ class ProfileRepository extends BaseRepository
     parent::__construct($model);
   }
 
-  public function getProfile($id)
-  {
-    $data = $this->find($id)
-      ->select('id', 'name', 'username', 'email', 'password', 'phone');
-    
-    return $data;
-  }
-
   public function updatePassword($id, string $newPassword)
   {
     $user = User::findOrFail($id);

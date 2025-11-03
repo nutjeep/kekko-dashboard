@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function() {
   Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
   Route::get('profile', [ProfileController::class, 'index'])->name('profile');
-  Route::put('profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+  Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
   Route::get('profile/change-password', [ProfileController::class, 'password'])->name('profile.password');
   Route::put('profile/change-password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdateProfileRequest extends FormRequest
    */
   public function authorize(): bool
   {
-    return false;
+    return auth()->check();
   }
 
   /**
@@ -21,11 +22,21 @@ class UpdateProfileRequest extends FormRequest
    */
   public function rules(): array
   {
+    $userId = auth()->id();
     return [
       'name' => 'string|max:255',
-      'username' => 'string|max:255',
-      'email' => 'string|unique:users,email',
-      'phone' => 'nullable'
+      'username' => [
+        'required',
+        'string',
+        'max:255',
+        Rule::unique('users')->ignore($userId)
+      ],
+      'email' => [
+        'nullable',
+        'email',
+        Rule::unique('users')->ignore(auth()->user()->email, 'email')
+      ],
+      'phone' => 'nullable|min:8'
     ];
   }
 }

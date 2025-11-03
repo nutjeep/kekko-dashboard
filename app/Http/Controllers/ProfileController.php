@@ -27,22 +27,32 @@ class ProfileController extends Controller
     return view('pages.profile.index', compact('profile'));
   }
 
-  public function update (UpdateProfileRequest $request, $id)
+  public function update (UpdateProfileRequest $request)
   {
     try {
       DB::beginTransaction();
 
       $validatedData = $request->validated();
-      $this->profile->update($id, $validatedData);
+      $userId = Auth::id();
+      $this->profile->update($userId, $validatedData);
 
       DB::commit();
-      return redirect()->back()->with('success', 'Berhasil update profil');
+      return response()->json([
+        'success' => true,
+        'message' => 'Berhasil update',
+        'redirect' => route('profile')
+      ]);
     }
     catch (ValidationException $e)
     {
       DB::rollBack();
       Log::error("Error Update Profile: " . $e->validator->errors());
-      return back()->withErrors($e->validator)->withInput();
+      return response()->json([
+        'success' => false,
+        'message' => $e->validator->errors(),
+        'redirect' => back()
+      ]);
+      // return back()->withErrors($e->validator)->withInput();
     }
   }
 

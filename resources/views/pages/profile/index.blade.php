@@ -27,7 +27,7 @@
       <h2 class="m-0 font-weight-bold text-primary h4">Profil</h2>
     </div>
     <div class="card-body">
-      <form method="post">
+      <form>
         @csrf
         <div class="row mb-3">
           <div class="col-2">
@@ -63,7 +63,7 @@
         </div>
         <div class="row justify-content-center d-flex">
           <div class="col-6">
-            <button type="submit" class="btn-update-data btn btn-info px-4 mr-3">
+            <button type="submit" class="btn-update-data btn btn-primary px-4 mr-3">
               <i class="fas fa-sync-alt mr-1"></i>
               <strong>Update Data</strong>
             </button>
@@ -81,20 +81,21 @@
     $(document).on('submit', 'form', function (e) {
       e.preventDefault();
 
-      let url = "{{ route('profile.update', $profile->id) }}";
+      let url = "{{ route('profile.update') }}";
 
       $.ajax({
         url: url,
-        type: 'PUT',
+        type: 'POST',
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: $(this).serialize(),
         success: function(response) {
-          alert('berhasil update', response);
+          alert(response.message);
+          window.location.href = response.redirect
         },
         error: function(error) {
-          alert('gagal update', error);
+          alert('gagal update: ' + error.responseJSON.message);
         }
       });
     });
