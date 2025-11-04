@@ -30,7 +30,6 @@ class UserSeeder extends Seeder
   
   public function run(): void
   {
-    DB::table('users')->truncate();
     $usersSeed = $this->users;
     foreach ($usersSeed as $user) {
         $user_exist = User::where('email', $user['email'])->first();
