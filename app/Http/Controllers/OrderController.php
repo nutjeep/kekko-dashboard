@@ -29,7 +29,7 @@ class OrderController extends Controller
     $statuses = $this->orderRepository->getStatuses();
 
     return view('pages.order.index',
-        compact('orders', 'employees', 'statuses'));
+      compact('orders', 'employees', 'statuses'));
   }
 
   public function show($id)
@@ -47,7 +47,7 @@ class OrderController extends Controller
     $back_button_route = route('order');
 
     return view('pages.order.edit', 
-        compact('order', 'statuses', 'employees', 'back_button', 'back_button_route', 'product_digital_invitations'));
+      compact('order', 'statuses', 'employees', 'back_button', 'back_button_route', 'product_digital_invitations'));
   }
 
   public function update(Request $request, $id)
@@ -62,11 +62,11 @@ class OrderController extends Controller
       
       if($request->action == 'update_and_transaction') {
         $transaction_data = [
-            'order_id' => $id,
-            'order_date' => $order->order_date ?? $order->created_at,
-            'due_date' => $request->due_date ?? null,
-            'total_amount' => $request->total_price ?? null,
-            'status' => 'pending'
+          'order_id' => $id,
+          'order_date' => $order->order_date ?? $order->created_at,
+          'due_date' => $request->due_date ?? null,
+          'total_amount' => $request->total_price ?? null,
+          'status' => 'pending'
         ];
 
         $this->transactionRepository->create($transaction_data);
