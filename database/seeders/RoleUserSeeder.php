@@ -9,10 +9,10 @@ class RoleUserSeeder extends Seeder
 {
    protected array $roles = [
       [
-         'name' => 'superadmin',
+        'name' => 'superadmin',
       ],
       [
-         'name' => 'employee',
+        'name' => 'employee',
       ],
    ];
 

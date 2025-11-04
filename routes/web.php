@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function() {
   Route::put('profile/change-password/update', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
   Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-  Route::middleware('superadmin')->group(function() {
+  // Route::middleware('superadmin')->group(function() {
     Route::get('order', [OrderController::class, 'index'])->name('order');
     Route::get('order/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
     Route::get('order/get_by_id/{id}', [OrderController::class, 'getOrderById'])->name('order.get_by_id');
@@ -53,5 +53,5 @@ Route::middleware('auth')->group(function() {
 
     Route::get('data-pesanan', [OrderController::class, 'orderData'])->name('order_data');
     Route::post('data-pesanan/send', [OrderController::class, 'sendOrderData'])->name('send.order_data');
-  });
+  // });
 });

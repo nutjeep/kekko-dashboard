@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -15,6 +16,7 @@ class UserSeeder extends Seeder
         'email' => 'admin@kekkoinvitation.com',
         'phone' => '085730739878',
         'password' => 'password',
+        'role_id' => 1
     ],
     [
         'name' => 'M Najib Abdulloh',
@@ -22,11 +24,13 @@ class UserSeeder extends Seeder
         'email' => 'najib@kekkoinvitation.com',
         'phone' => '083850296250',
         'password' => 'password',
+        'role_id' => 1
     ],
   ];
   
   public function run(): void
   {
+    DB::table('users')->truncate();
     $usersSeed = $this->users;
     foreach ($usersSeed as $user) {
         $user_exist = User::where('email', $user['email'])->first();
