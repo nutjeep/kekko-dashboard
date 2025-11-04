@@ -91,8 +91,9 @@ class OrderController extends Controller
   public function orderData()
   {
     $digital_invitations = $this->orderRepository->getProductDigitalInvitations();
+    $title = 'Data Pesanan';
 
-    return view('pages.order.order_data', compact('digital_invitations'));
+    return view('pages.order.order_data', compact('digital_invitations', 'title'));
   }
 
   public function sendOrderData(Request $request)
