@@ -51,7 +51,8 @@ Route::middleware('auth')->group(function() {
     Route::get('product/package/edit/{id}', [ProductPackageController::class, 'edit'])->name('product_package.edit');
     Route::post('product/package/update/{id}', [ProductPackageController::class, 'update'])->name('product_package.update');
 
-    Route::get('data-pesanan', [OrderController::class, 'orderData'])->name('order_data');
-    Route::post('data-pesanan/send', [OrderController::class, 'sendOrderData'])->name('send.order_data');
   // });
 });
+
+Route::get('data-pesanan', [OrderController::class, 'orderData'])->name('order_data');
+Route::post('data-pesanan/send', [OrderController::class, 'sendOrderData'])->name('send.order_data');
