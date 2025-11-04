@@ -34,7 +34,7 @@ class OrderRepository extends BaseRepository
    {
       $data = Product::where('type', 'digital')
          ->where('is_active', true)
-         ->select('id', 'name')
+         ->select('id', 'name', 'theme_id', 'package_id', 'type' ,'is_active')
          ->orderBy('name', 'asc')
          ->get();
 

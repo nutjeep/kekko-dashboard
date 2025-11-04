@@ -187,7 +187,7 @@
                <div class="mb-3" id="digital_invitation_section">
                   <h3 class="h5">Undangan Digital</h3>
                   <div class="form-group mb-3">
-                     <label for="digital_id">Tema Undangan</label>
+                     <label for="digital_id">Paket Undangan</label>
                      <select id="digital_id" name="digital_id" class="form-control">
                         <option value="" disabled selected>Pilih Produk</option>
                         @foreach ($digital_invitations as $digital)

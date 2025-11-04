@@ -15,6 +15,10 @@ class Product extends Model
     'id', 'created_at', 'updated_at', 'deleted_at'
   ];
 
+  protected $appends = [
+    'product_package_name', 'product_theme_name'
+  ];
+
   protected $hidden = [
     'created_at', 'updated_at', 'deleted_at'
   ];
