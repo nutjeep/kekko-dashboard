@@ -12,17 +12,17 @@ class EmployeeSeeder extends Seeder
   protected array $users = [
     [
       'name' => 'Habib',
-      'username' => 'kekko',
+      'username' => 'habib',
       'email' => 'habstudio@gmail.com',
-      'phone' => '085730739878',
+      'phone' => '085',
       'password' => 'password',
       'role_id' => 2
     ],
     [
       'name' => 'M Najib Abdulloh',
-      'username' => 'najib',
+      'username' => 'najib - kekko',
       'email' => 'najibabdullohm@gmail.com',
-      'phone' => '083850296250',
+      'phone' => '083',
       'password' => 'password',
       'role_id' => 2
     ],
